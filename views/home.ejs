@@ -1,0 +1,24 @@
+<%- include("./partials/homeHeader") -%>
+
+<h1 class="home-header"><%= currentDate %></h1>
+
+<form action="/" method="POST" class="box">
+    <p><%= weekday %></p>
+    <hr>
+
+    <% newSubjectItems.forEach((subjectItem) => { %>
+    <div class="subject-block">
+        <input type="checkbox" name="subjectRemove">
+
+        <a href="<%= subjectItem.linkHref %>" target="_blank" class="subject-list">
+            <%= subjectItem.subjectNames %>
+        </a>
+    </div>
+    <% }); %>
+
+    <input type="text" name="subject" placeholder="Subject Name" autocomplete="off" onfocus="subjectInputFocus()"
+        onblur="subjectInputBlur()" autofocus>
+    <button type="submit" name="submit">+</button>
+</form>
+
+<%- include("./partials/homeFooter") -%>

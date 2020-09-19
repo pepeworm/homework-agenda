@@ -1,0 +1,125 @@
+// SCSS Mixin
+
+@mixin flexboxCenter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+// SCSS Variables
+
+$darkGrey: #353535;
+$blue: #0b5bd5;
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Raleway", sans-serif;
+    color: $darkGrey;
+    text-align: center;
+}
+
+body {
+    background: linear-gradient(to right, rgb(87, 123, 233), rgb(68, 95, 247));
+
+    @include flexboxCenter;
+
+    min-height: 100vh;
+}
+
+h1 {
+    font-size: 2.5rem;
+    padding: 0.8rem 2.5rem;
+    background: rgb(255, 255, 255);
+    border-radius: 1rem;
+    margin-bottom: 3rem;
+    box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+}
+
+form.box {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem 3rem;
+    text-align: center;
+    box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+
+    p {
+        font-weight: 700;
+        font-size: 2rem;
+    }
+
+    hr {
+        margin: 0.8rem auto 3rem;
+        border: 1px solid rgba(#2f7ef5, 0.9);
+    }
+
+    .subject-block {
+        margin-top: 2.5rem;
+        display: block;
+
+        input[type="checkbox"] {
+            margin-right: 0.6rem;
+            cursor: pointer;
+            border: 1px solid $darkGrey;
+
+            &:checked {
+                outline: none;
+
+                & + a {
+                    text-decoration: line-through;
+                    text-decoration-color: $blue;
+                }
+            }
+        }
+
+        a {
+            font-size: 1.4rem;
+            color: $blue;
+            text-decoration: none;
+            font-weight: 500;
+
+            &:hover {
+                border-bottom: 1px solid $blue;
+            }
+        }
+    }
+	
+	input[name="subject"] {
+        border: none;
+        padding: 0.5rem 0;
+        margin-top: 2.5rem;
+        font-size: 1.3rem;
+
+        transition: box-shadow 200ms linear;
+
+        &:focus {
+            outline: none;
+
+			box-shadow: inset 0 -2px 0 0 rgba(#2f7ef5, 0.9);
+        }
+    }
+
+    ::placeholder {
+        color: #5a5a5a;
+        opacity: 1;
+    }
+
+    button {
+        margin-left: 1rem;
+        cursor: pointer;
+        min-height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        border-color: transparent;
+        background-color: rgba(#2f7ef5, 0.9);
+        color: #fff;
+        font-size: 30px;
+        border-width: 0;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
