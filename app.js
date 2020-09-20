@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
 
-// * Root Route
+// * MongoDB (Subject Page)
 
 const subjectSchema = new mongoose.Schema({
     subjectNames: String,
@@ -33,15 +33,13 @@ const subjectSchema = new mongoose.Schema({
 
 const Subject = new mongoose.model("Subject", subjectSchema);
 
-// Global Variables
+// * Root Route
 
 app.get("/", (req, res) => {
     Subject.find({}, (err, foundSubjects) => {
         if (err) {
             console.log(err);
         } else {
-            console.log(foundSubjects);
-
             res.render("home", {
                 currentDate: dateTime.currentDate(),
                 weekday: dateTime.weekday(),
@@ -52,25 +50,33 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-    const subject = req.body.subject;
+    const subject = req.body.newSubject;
 
-    const newSubject = new Subject({
+    const subjectItem = new Subject({
         subjectNames: _.upperFirst(subject),
-        linkHref: _.kebabCase(subject),
+        linkHref: `${_.kebabCase(subject)}-${_.uniqueId("subject_")}`,
     });
 
-    newSubject.save((err) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("Successfully added to database");
-        }
-    });
+    subjectItem.save();
 
     res.redirect("/");
 });
 
-// Others
+// * /deleteSubject Route
+
+app.post("/deleteSubject", (req, res) => {
+    const subjectDeleteId = req.body.subjectDeleteCheckbox;
+
+    Subject.deleteOne({ _id: subjectDeleteId }, (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect("/");
+        }
+    });
+});
+
+// * Others
 
 app.listen(process.env.PORT || 3000, () => {
     console.log("Listening on port 3000");

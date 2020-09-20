@@ -37,7 +37,7 @@ h1 {
           box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
 }
 
-form.box {
+.subject-box {
   background: white;
   border-radius: 1rem;
   padding: 1.5rem 3rem;
@@ -46,52 +46,26 @@ form.box {
           box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
 }
 
-form.box p {
+.subject-box p {
   font-weight: 700;
   font-size: 2rem;
 }
 
-form.box hr {
-  margin: 0.8rem auto 3rem;
-  border: 1px solid rgba(47, 126, 245, 0.9);
+.subject-box hr {
+  margin: 0.8rem auto 3.5rem;
+  border-bottom: 2px;
+  border-color: rgba(47, 126, 245, 0.9);
 }
 
-form.box .subject-block {
-  margin-top: 2.5rem;
+.subject-box .new-subject-form {
+  margin-top: 2.7rem;
   display: block;
 }
 
-form.box .subject-block input[type="checkbox"] {
-  margin-right: 0.6rem;
-  cursor: pointer;
-  border: 1px solid #353535;
-}
-
-form.box .subject-block input[type="checkbox"]:checked {
-  outline: none;
-}
-
-form.box .subject-block input[type="checkbox"]:checked + a {
-  text-decoration: line-through;
-  -webkit-text-decoration-color: #0b5bd5;
-          text-decoration-color: #0b5bd5;
-}
-
-form.box .subject-block a {
-  font-size: 1.4rem;
-  color: #0b5bd5;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-form.box .subject-block a:hover {
-  border-bottom: 1px solid #0b5bd5;
-}
-
-form.box input[name="subject"] {
+.subject-box .new-subject-form input[name="newSubject"] {
   border: none;
+  outline: none;
   padding: 0.5rem 0;
-  margin-top: 2.5rem;
   font-size: 1.3rem;
   -webkit-transition: -webkit-box-shadow 200ms linear;
   transition: -webkit-box-shadow 200ms linear;
@@ -99,33 +73,33 @@ form.box input[name="subject"] {
   transition: box-shadow 200ms linear, -webkit-box-shadow 200ms linear;
 }
 
-form.box input[name="subject"]:focus {
+.subject-box .new-subject-form input[name="newSubject"]:focus {
   outline: none;
   -webkit-box-shadow: inset 0 -2px 0 0 rgba(47, 126, 245, 0.9);
           box-shadow: inset 0 -2px 0 0 rgba(47, 126, 245, 0.9);
 }
 
-form.box ::-webkit-input-placeholder {
+.subject-box .new-subject-form ::-webkit-input-placeholder {
   color: #5a5a5a;
   opacity: 1;
 }
 
-form.box :-ms-input-placeholder {
+.subject-box .new-subject-form :-ms-input-placeholder {
   color: #5a5a5a;
   opacity: 1;
 }
 
-form.box ::-ms-input-placeholder {
+.subject-box .new-subject-form ::-ms-input-placeholder {
   color: #5a5a5a;
   opacity: 1;
 }
 
-form.box ::placeholder {
+.subject-box .new-subject-form ::placeholder {
   color: #5a5a5a;
   opacity: 1;
 }
 
-form.box button {
+.subject-box .new-subject-form button {
   margin-left: 1rem;
   cursor: pointer;
   min-height: 50px;
@@ -138,7 +112,39 @@ form.box button {
   border-width: 0;
 }
 
-form.box button:focus {
+.subject-box .new-subject-form button:focus {
   outline: none;
+}
+
+.subject-box form.subject-delete-form .subject-block {
+  margin-top: 2.5rem;
+  display: block;
+}
+
+.subject-box form.subject-delete-form .subject-block input[type="checkbox"] {
+  margin-right: 0.6rem;
+  cursor: pointer;
+  border: 1px solid #353535;
+}
+
+.subject-box form.subject-delete-form .subject-block input[type="checkbox"]:checked {
+  outline: none;
+}
+
+.subject-box form.subject-delete-form .subject-block input[type="checkbox"]:checked + a {
+  text-decoration: line-through;
+  -webkit-text-decoration-color: #0b5bd5;
+          text-decoration-color: #0b5bd5;
+}
+
+.subject-box form.subject-delete-form .subject-block a {
+  font-size: 1.4rem;
+  color: #0b5bd5;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.subject-box form.subject-delete-form .subject-block a:hover {
+  border-bottom: 1px solid #0b5bd5;
 }
 /*# sourceMappingURL=homeMain.css.map */

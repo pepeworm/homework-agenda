@@ -8,7 +8,7 @@
 
     <!-- Favicon -->
 
-    <link href="./images/favicon.ico">
+    <link rel="icon" href="./images/favicon.ico">
 
     <!-- CSS -->
 
@@ -18,6 +18,17 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+
+    <script>
+        const homeHeaderTop = () => {
+            const homeHeader = document.querySelector("h1");
+            const subjectBox = document.querySelector(".subject-box");
+            if (homeHeader.getBoundingClientRect().top === 0) {
+                homeHeader.style.marginTop = "8rem";
+                subjectBox.style.marginBottom = "8rem";
+            }
+        };
+    </script>
 </head>
 
 <body onload="homeHeaderTop()">

@@ -2,23 +2,25 @@
 
 <h1 class="home-header"><%= currentDate %></h1>
 
-<form action="/" method="POST" class="box">
+<div class="subject-box">
     <p><%= weekday %></p>
     <hr>
 
-    <% newSubjectItems.forEach((subjectItem) => { %>
-    <div class="subject-block">
-        <input type="checkbox" name="subjectRemove">
-
-        <a href="<%= subjectItem.linkHref %>" target="_blank" class="subject-list">
-            <%= subjectItem.subjectNames %>
-        </a>
-    </div>
+    <% newSubjectItems.forEach((item) => { %>
+    <form action="/deleteSubject" method="POST" class="subject-delete-form">
+        <div class="subject-block">
+            <input type="checkbox" name="subjectDeleteCheckbox" onchange="this.form.submit()" value="<%= item._id %>">
+            <a href="<%= item.linkHref %>"><%= item.subjectNames %></a>
+        </div>
+    </form>
     <% }); %>
 
-    <input type="text" name="subject" placeholder="Subject Name" autocomplete="off" onfocus="subjectInputFocus()"
-        onblur="subjectInputBlur()" autofocus>
-    <button type="submit" name="submit">+</button>
-</form>
+    <form action="/" method="POST" class="new-subject-form">
+        <input type="text" name="newSubject" placeholder="Subject Name" onfocus="subjectInputFocus()"
+            onblur="subjectInputBlur()" autocomplete="off" autofocus required>
+
+        <button type="submit" name="newSubjectSubmit">+</button>
+    </form>
+</div>
 
 <%- include("./partials/homeFooter") -%>
