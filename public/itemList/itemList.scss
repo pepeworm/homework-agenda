@@ -1,0 +1,39 @@
+// SCSS Mixin
+
+@mixin boxWidth {
+    display: flex;
+    flex-direction: column;
+}
+
+// SCSS Variables
+
+$darkGrey: #353535;
+$blue: #0b5bd5;
+$lightBlue: rgb(87, 123, 233);
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Raleway", sans-serif;
+    color: $darkGrey;
+    text-align: center;
+}
+
+html {
+    padding: 6rem 0;
+    overflow-x: hidden;
+
+    background-color: $lightBlue;
+}
+
+body {
+    @include boxWidth();
+}
+
+footer {
+    p {
+        color: #e9e9e9;
+        margin-top: 3rem;
+    }
+}

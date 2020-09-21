@@ -8,9 +8,13 @@
   text-align: center;
 }
 
+html {
+  padding: 6rem 0;
+  overflow-x: hidden;
+  background-color: #577be9;
+}
+
 body {
-  background: -webkit-gradient(linear, left top, right top, from(#577be9), to(#445ff7));
-  background: linear-gradient(to right, #577be9, #445ff7);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -18,13 +22,6 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  min-height: 100vh;
 }
 
 h1 {
@@ -32,18 +29,21 @@ h1 {
   padding: 0.8rem 2.5rem;
   background: white;
   border-radius: 1rem;
-  margin-bottom: 3rem;
+  margin: 0 auto 3rem;
   -webkit-box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
           box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+  border: 1px solid #353535;
 }
 
 .subject-box {
+  border: 1px solid #353535;
   background: white;
   border-radius: 1rem;
   padding: 1.5rem 3rem;
   text-align: center;
   -webkit-box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
           box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+  margin: auto;
 }
 
 .subject-box p {
@@ -53,8 +53,8 @@ h1 {
 
 .subject-box hr {
   margin: 0.8rem auto 3.5rem;
-  border-bottom: 2px;
-  border-color: rgba(47, 126, 245, 0.9);
+  border: 1px solid rgba(47, 126, 245, 0.9);
+  background-color: rgba(47, 126, 245, 0.9);
 }
 
 .subject-box .new-subject-form {
@@ -116,6 +116,11 @@ h1 {
   outline: none;
 }
 
+.subject-box form.subject-delete-form {
+  width: 90%;
+  margin: auto;
+}
+
 .subject-box form.subject-delete-form .subject-block {
   margin-top: 2.5rem;
   display: block;
@@ -146,5 +151,10 @@ h1 {
 
 .subject-box form.subject-delete-form .subject-block a:hover {
   border-bottom: 1px solid #0b5bd5;
+}
+
+footer p {
+  color: #e9e9e9;
+  margin-top: 3rem;
 }
 /*# sourceMappingURL=homeMain.css.map */

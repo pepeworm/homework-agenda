@@ -1,16 +1,15 @@
 // SCSS Mixin
 
-@mixin flexboxCenter {
+@mixin boxWidth {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 // SCSS Variables
 
 $darkGrey: #353535;
 $blue: #0b5bd5;
+$lightBlue: rgb(87, 123, 233);
 
 * {
     padding: 0;
@@ -21,12 +20,15 @@ $blue: #0b5bd5;
     text-align: center;
 }
 
+html {
+    padding: 6rem 0;
+    overflow-x: hidden;
+
+    background-color: $lightBlue;
+}
+
 body {
-    background: linear-gradient(to right, rgb(87, 123, 233), rgb(68, 95, 247));
-
-    @include flexboxCenter;
-
-    min-height: 100vh;
+    @include boxWidth();
 }
 
 h1 {
@@ -34,16 +36,19 @@ h1 {
     padding: 0.8rem 2.5rem;
     background: rgb(255, 255, 255);
     border-radius: 1rem;
-    margin-bottom: 3rem;
+    margin: 0 auto 3rem;
     box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+    border: 1px solid $darkGrey;
 }
 
 .subject-box {
+    border: 1px solid $darkGrey;
     background: white;
     border-radius: 1rem;
     padding: 1.5rem 3rem;
     text-align: center;
     box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+    margin: auto;
 
     p {
         font-weight: 700;
@@ -52,8 +57,8 @@ h1 {
 
     hr {
         margin: 0.8rem auto 3.5rem;
-        border-bottom: 2px;
-        border-color: rgba(#2f7ef5, 0.9);
+        border: 1px solid rgba(#2f7ef5, 0.9);
+        background-color: rgba(#2f7ef5, 0.9);
     }
 
     .new-subject-form {
@@ -99,6 +104,9 @@ h1 {
     }
 
     form.subject-delete-form {
+        width: 90%;
+        margin: auto;
+
         .subject-block {
             margin-top: 2.5rem;
             display: block;
@@ -129,5 +137,12 @@ h1 {
                 }
             }
         }
+    }
+}
+
+footer {
+    p {
+        color: #e9e9e9;
+        margin-top: 3rem;
     }
 }

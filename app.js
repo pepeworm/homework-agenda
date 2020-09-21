@@ -28,7 +28,6 @@ app.set("view engine", "ejs");
 
 const subjectSchema = new mongoose.Schema({
     subjectNames: String,
-    linkHref: String,
 });
 
 const Subject = new mongoose.model("Subject", subjectSchema);
@@ -54,7 +53,6 @@ app.post("/", (req, res) => {
 
     const subjectItem = new Subject({
         subjectNames: _.upperFirst(subject),
-        linkHref: `${_.kebabCase(subject)}-${_.uniqueId("subject_")}`,
     });
 
     subjectItem.save();
@@ -72,6 +70,22 @@ app.post("/deleteSubject", (req, res) => {
             console.log(err);
         } else {
             res.redirect("/");
+        }
+    });
+});
+
+// * Route Parameters (Subjects) 
+
+app.get("/subjects/:id", (req, res) => {
+    const subjectId = req.params.id;
+
+    Subject.find({ _id: subjectId }, (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(`Opened new tab for subject ${subjectId}`);
+
+            res.render("itemsList");
         }
     });
 });
