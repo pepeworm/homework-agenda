@@ -1,5 +1,67 @@
-<%- include("./partials/itemListHead") -%>
+<!DOCTYPE html>
+<html lang="en">
 
-<h1>Hello</h1>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework Agenda</title>
 
-<%- include("./partials/itemListFooter") -%>
+    <!-- Favicon -->
+
+    <link rel="icon" href="../images/favicon.ico">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="../itemList/itemList.css">
+
+    <!-- Font Family -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <h1 class="home-header"><%= subject %></h1>
+
+    <div class="subject-box">
+        <p class="weekday"><%= weekday %></p>
+        <hr>
+
+        <% newListItems.forEach((listItem) => { %>
+        <form action="/deleteSubject" method="POST" class="subject-delete-form">
+            <div class="subject-block">
+                <input type="checkbox" name="listItemDelete" onchange="this.form.submit()">
+                <p href="#" class="subject-title-name-display"><%= listItem.subjectTitleName %></p>
+                <% if (listItem.subjectBodyName.length > 0 || listItem.subjectFooterName.length > 0) { %>
+                <a href="/subjects/items/<%= listItem._id %>" target="_blank" class="extra-info">(...)</a>
+                <% }; %>
+            </div>
+        </form>
+        <% }); %>
+
+        <hr class="hr-two">
+
+        <form action="/subjects/<%= subjectId %>" method="POST" class="new-subject-form">
+            <div class="fields">
+                <input type="text" name="subjectItemTitle" class="subject-item-title subject-item-fields"
+                    placeholder="Name of Item" required autofocus onfocus="subjectItemTitleFocus()"
+                    onblur="subjectItemTitleBlur()" autocomplete="off">
+                <textarea name="subjectItemBody" rows="8" class="subject-item-body subject-item-fields"
+                    placeholder="Description" onfocus="subjectItemBodyFocus()" onblur="subjectItemBodyBlur()"
+                    autocomplete="off"></textarea>
+                <input type="text" name="subjectItemFooter" class="subject-item-footer subject-item-fields"
+                    placeholder="Additional Notes" onfocus="subjectItemFooterFocus()" onblur="subjectItemFooterBlur()"
+                    autocomplete="off">
+            </div>
+            <button type="submit" name="newSubjectItemSubmit" class="new-subject-item-submit">Add To List</button>
+        </form>
+    </div>
+
+    <script src="../itemList/itemList.js"></script>
+</body>
+
+<footer>
+    <p>&copy; 2020 Pepeworm</p>
+</footer>
+
+</html>

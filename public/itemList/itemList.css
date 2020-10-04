@@ -1,3 +1,13 @@
+::-moz-selection {
+  color: #fff;
+  background: #353535;
+}
+
+::selection {
+  color: #fff;
+  background: #353535;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -22,6 +32,167 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+}
+
+h1.home-header {
+  font-size: 2.5rem;
+  padding: 0.8rem 2.5rem;
+  background: white;
+  border-radius: 0.5rem;
+  margin: 0 auto 3rem;
+  -webkit-box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+          box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+  border: 1px solid #353535;
+  max-width: 85%;
+}
+
+.subject-box {
+  border: 1px solid #353535;
+  background: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem 3rem;
+  text-align: center;
+  -webkit-box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+          box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+  margin: auto;
+  max-width: 85%;
+}
+
+.subject-box p.weekday {
+  font-weight: 700;
+  font-size: 2.2rem;
+}
+
+.subject-box hr {
+  margin: 0.8rem auto 4rem;
+  border: 1px solid rgba(47, 126, 245, 0.9);
+  background-color: rgba(47, 126, 245, 0.9);
+}
+
+.subject-box hr.hr-two {
+  margin: 4rem auto 0;
+}
+
+.subject-box .new-subject-form {
+  margin-top: 1.5rem;
+  display: block;
+}
+
+.subject-box .new-subject-form .subject-item-fields {
+  display: block;
+  margin-bottom: 1.3rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.5rem 0;
+  border-radius: 0.2rem;
+  border: 1px solid #353535;
+  font-size: 1rem;
+  color: #353535;
+  -webkit-transition: border 350ms;
+  transition: border 350ms;
+}
+
+.subject-box .new-subject-form .subject-item-fields:focus {
+  outline: none;
+  border: 1px solid #577be9;
+}
+
+.subject-box .new-subject-form input.subject-item-title {
+  width: 100%;
+  min-width: 25rem;
+}
+
+.subject-box .new-subject-form textarea.subject-item-body {
+  resize: vertical;
+  width: 100%;
+  min-width: 25rem;
+}
+
+.subject-box .new-subject-form input.subject-item-footer {
+  width: 100%;
+  min-width: 25rem;
+}
+
+.subject-box ::-webkit-input-placeholder {
+  color: #5a5a5a;
+  opacity: 1;
+}
+
+.subject-box :-ms-input-placeholder {
+  color: #5a5a5a;
+  opacity: 1;
+}
+
+.subject-box ::-ms-input-placeholder {
+  color: #5a5a5a;
+  opacity: 1;
+}
+
+.subject-box ::placeholder {
+  color: #5a5a5a;
+  opacity: 1;
+}
+
+button.new-subject-item-submit {
+  margin-top: 0.5rem;
+  border: 1px solid #2f7ef5;
+  background: #2f7ef5;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.6rem 0;
+  font-size: 0.9rem;
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
+button.new-subject-item-submit:focus {
+  outline: none;
+}
+
+form.subject-delete-form {
+  width: 90%;
+  margin: auto;
+}
+
+form.subject-delete-form .subject-block {
+  margin-top: 2.5rem;
+  display: block;
+}
+
+form.subject-delete-form .subject-block input[type="checkbox"] {
+  margin-right: 1rem;
+  cursor: pointer;
+  border: 1px solid #353535;
+}
+
+form.subject-delete-form .subject-block input[type="checkbox"]:checked {
+  outline: none;
+}
+
+form.subject-delete-form .subject-block input[type="checkbox"]:checked + a {
+  text-decoration: line-through;
+  -webkit-text-decoration-color: #0b5bd5;
+          text-decoration-color: #0b5bd5;
+}
+
+form.subject-delete-form .subject-block p.subject-title-name-display {
+  font-size: 1.4rem;
+  color: #353535;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline;
+}
+
+form.subject-delete-form .subject-block a.extra-info {
+  font-size: 1.25rem;
+  color: #0b5bd5;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 0.2rem;
+}
+
+form.subject-delete-form .subject-block a.extra-info:hover {
+  border-bottom: 1px solid #0b5bd5;
 }
 
 footer p {

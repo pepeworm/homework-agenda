@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework Agenda</title>
+
+    <!-- Favicon -->
+
+    <link rel="icon" href="../../images/favicon.ico">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="../../itemListFull/itemListFull.css">
+
+    <!-- Font Family -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <% if (foundItem.subjectTitleName && foundItem.subjectBodyName && foundItem.subjectFooterName) { %>
+    <h1><%= foundItem.subjectTitleName %></h1>
+    <p class="body-p"><%= foundItem.subjectBodyName %></p>
+    <h3><%= foundItem.subjectFooterName %></h3>
+    <% } else if (foundItem.subjectTitleName && foundItem.subjectBodyName && !foundItem.subjectFooterName) { %>
+    <h1><%= foundItem.subjectTitleName %></h1>
+    <p class="body-p"><%= foundItem.subjectBodyName %></p>
+    <% } else { %>
+    <h1><%= foundItem.subjectTitleName %></h1>
+    <h3><%= foundItem.subjectFooterName %></h3>
+    <% } %>
+</body>
+
+<footer>
+    <p>&copy; 2020 Pepeworm</p>
+</footer>
+
+</html>

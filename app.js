@@ -13,6 +13,7 @@ const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost:27017/homeworkAgenda", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
 });
 
 // * Express.js
@@ -31,6 +32,18 @@ const subjectSchema = new mongoose.Schema({
 });
 
 const Subject = new mongoose.model("Subject", subjectSchema);
+
+// * MongoDB (Item List Page)
+
+const itemListSchema = new mongoose.Schema({
+    parentSubjectName: String,
+    parentSubjectId: String,
+    subjectTitleName: String,
+    subjectBodyName: String,
+    subjectFooterName: String,
+});
+
+const ItemList = new mongoose.model("Item", itemListSchema);
 
 // * Root Route
 
@@ -52,20 +65,10 @@ app.post("/", (req, res) => {
     const subject = req.body.newSubject;
 
     const subjectItem = new Subject({
-        subjectNames: _.upperFirst(subject),
+        subjectNames: subject,
     });
 
-    subjectItem.save();
-
-    res.redirect("/");
-});
-
-// * /deleteSubject Route
-
-app.post("/deleteSubject", (req, res) => {
-    const subjectDeleteId = req.body.subjectDeleteCheckbox;
-
-    Subject.deleteOne({ _id: subjectDeleteId }, (err) => {
+    subjectItem.save((err) => {
         if (err) {
             console.log(err);
         } else {
@@ -74,18 +77,103 @@ app.post("/deleteSubject", (req, res) => {
     });
 });
 
-// * Route Parameters (Subjects) 
+// * /deleteSubject Route
+
+app.post("/deleteSubject", (req, res) => {
+    const subjectDeleteId = req.body.subjectDeleteCheckbox;
+
+    Subject.findOne({ _id: subjectDeleteId }, (err, foundSubject) => {
+        if (err) {
+            console.log(err);
+        } else {
+            ItemList.deleteMany(
+                { parentSubjectId: foundSubject._id },
+                (err) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        Subject.deleteOne({ _id: subjectDeleteId }, (err) => {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                res.redirect("/");
+                            }
+                        });
+                    }
+                }
+            );
+        }
+    });
+});
+
+// * Route Parameters (Subjects)
 
 app.get("/subjects/:id", (req, res) => {
     const subjectId = req.params.id;
 
-    Subject.find({ _id: subjectId }, (err) => {
+    Subject.findOne({ _id: subjectId }, (err, foundSubject) => {
         if (err) {
             console.log(err);
         } else {
-            console.log(`Opened new tab for subject ${subjectId}`);
+            ItemList.find(
+                { parentSubjectId: foundSubject._id },
+                (err, foundItemList) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.render("itemsList", {
+                            weekday: dateTime.weekday(),
+                            subject: foundSubject.subjectNames,
+                            subjectId: subjectId,
+                            newListItems: foundItemList,
+                        });
+                    }
+                }
+            );
+        }
+    });
+});
 
-            res.render("itemsList");
+app.post("/subjects/:id", (req, res) => {
+    const newItemTitle = req.body.subjectItemTitle;
+    const newItemBody = req.body.subjectItemBody;
+    const newItemFooter = req.body.subjectItemFooter;
+
+    Subject.findOne({ _id: req.params.id }, (err, foundSubject) => {
+        if (err) {
+            console.log(err);
+        } else {
+            const listItem = new ItemList({
+                parentSubjectName: foundSubject.subjectNames,
+                parentSubjectId: foundSubject._id,
+                subjectTitleName: newItemTitle,
+                subjectBodyName: newItemBody,
+                subjectFooterName: newItemFooter,
+            });
+
+            listItem.save((err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.redirect("/subjects/" + req.params.id);
+                }
+            });
+        }
+    });
+});
+
+// * Subject Items Route
+
+app.get("/subjects/items/:listItemId", (req, res) => {
+    const listItemId = req.params.listItemId;
+
+    ItemList.findOne({ _id: listItemId }, (err, foundItem) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("listItemFull", {
+                foundItem: foundItem,
+            });
         }
     });
 });

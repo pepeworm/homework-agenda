@@ -10,7 +10,12 @@
     <form action="/deleteSubject" method="POST" class="subject-delete-form">
         <div class="subject-block">
             <input type="checkbox" name="subjectDeleteCheckbox" onchange="this.form.submit()" value="<%= item._id %>">
-            <a href="<%= "subjects" + "/" + item._id %>" target="_blank"><%= item.subjectNames %></a>
+            <% if (item.subjectNames.length > 30) { %>
+            <a href="<%= "subjects" + "/" + item._id %>"
+                class="subject-link"><%= item.subjectNames.slice(0, 31) + "..." %></a>
+            <% } else { %>
+            <a href="<%= "subjects" + "/" + item._id %>" class="subject-link"><%= item.subjectNames %></a>
+            <% } %>
         </div>
     </form>
     <% }); %>

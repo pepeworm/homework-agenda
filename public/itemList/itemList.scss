@@ -11,6 +11,11 @@ $darkGrey: #353535;
 $blue: #0b5bd5;
 $lightBlue: rgb(87, 123, 233);
 
+::selection {
+    color: #fff;
+    background: $darkGrey;
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -29,6 +34,151 @@ html {
 
 body {
     @include boxWidth();
+}
+
+h1 {
+    &.home-header {
+        font-size: 2.5rem;
+        padding: 0.8rem 2.5rem;
+        background: rgb(255, 255, 255);
+        border-radius: 0.5rem;
+        margin: 0 auto 3rem;
+        box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+        border: 1px solid $darkGrey;
+        max-width: 85%;
+    }
+}
+
+.subject-box {
+    border: 1px solid $darkGrey;
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem 3rem;
+    text-align: center;
+    box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+    margin: auto;
+    max-width: 85%;
+
+    p.weekday {
+        font-weight: 700;
+        font-size: 2.2rem;
+    }
+
+    hr {
+        margin: 0.8rem auto 4rem;
+        border: 1px solid rgba(#2f7ef5, 0.9);
+        background-color: rgba(#2f7ef5, 0.9);
+    }
+
+    hr.hr-two {
+        margin: 4rem auto 0;
+    }
+
+    .new-subject-form {
+        margin-top: 1.5rem;
+        display: block;
+
+        .subject-item-fields {
+            display: block;
+            margin-bottom: 1.3rem;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0.5rem 0;
+            border-radius: 0.2rem;
+            border: 1px solid $darkGrey;
+            font-size: 1rem;
+            color: $darkGrey;
+
+            transition: border 350ms;
+
+            &:focus {
+                outline: none;
+                border: 1px solid $lightBlue;
+            }
+        }
+
+        input.subject-item-title {
+            width: 100%;
+            min-width: 25rem;
+        }
+
+        textarea.subject-item-body {
+            resize: vertical;
+            width: 100%;
+            min-width: 25rem;
+        }
+
+        input.subject-item-footer {
+            width: 100%;
+            min-width: 25rem;
+        }
+    }
+
+    ::placeholder {
+        color: #5a5a5a;
+        opacity: 1;
+    }
+}
+
+button.new-subject-item-submit {
+    margin-top: 0.5rem;
+    border: 1px solid #2f7ef5;
+    background: #2f7ef5;
+    color: #fff;
+    cursor: pointer;
+    padding: 0.6rem 0;
+    font-size: 0.9rem;
+    width: 100%;
+    border-radius: 0.5rem;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+form.subject-delete-form {
+    width: 90%;
+    margin: auto;
+
+    .subject-block {
+        margin-top: 2.5rem;
+        display: block;
+
+        input[type="checkbox"] {
+            margin-right: 1rem;
+            cursor: pointer;
+            border: 1px solid $darkGrey;
+
+            &:checked {
+                outline: none;
+
+                &+a {
+                    text-decoration: line-through;
+                    text-decoration-color: $blue;
+                }
+            }
+        }
+
+        p.subject-title-name-display {
+            font-size: 1.4rem;
+            color: $darkGrey;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline;
+        }
+
+        a.extra-info {
+            font-size: 1.25rem;
+            color: $blue;
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 0.2rem;
+
+            &:hover {
+                border-bottom: 1px solid $blue;
+            }
+        }
+    }
 }
 
 footer {

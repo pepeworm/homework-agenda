@@ -1,0 +1,79 @@
+::-moz-selection {
+  color: #fff;
+  background: #353535;
+}
+
+::selection {
+  color: #fff;
+  background: #353535;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: "Raleway", sans-serif;
+  color: #353535;
+  text-align: center;
+}
+
+html {
+  padding: 6rem 0;
+  overflow-x: hidden;
+  background-color: #577be9;
+}
+
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+h1 {
+  background: #fff;
+  padding: 0.6rem 2.8rem;
+  border-radius: 0.4rem;
+  border: 1px solid #353535;
+  max-width: 85%;
+  font-size: 3.5rem;
+  margin: 0 auto 2rem;
+  display: block;
+}
+
+p.body-p {
+  display: block;
+  margin: 0 auto 2rem;
+  font-weight: 600;
+  font-size: 1.4rem;
+  background: #fff;
+  padding: 1rem 2rem;
+  border-radius: 0.4rem;
+  border: 1px solid #353535;
+  max-width: 60ch;
+}
+
+h3 {
+  display: block;
+  margin: 0 auto;
+  font-weight: 400;
+  font-size: 1.2rem;
+  background: #fff;
+  padding: 0.6rem 2.8rem;
+  border-radius: 0.4rem;
+  border: 1px solid #353535;
+  max-width: 85%;
+  font-size: 3.5rem;
+  margin: 0 auto 2rem;
+  display: block;
+}
+
+footer p {
+  color: #e9e9e9;
+  margin-top: 3rem;
+}
+/*# sourceMappingURL=itemListFull.css.map */
