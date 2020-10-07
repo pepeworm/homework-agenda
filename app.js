@@ -55,7 +55,7 @@ app.get("/", (req, res) => {
             res.render("home", {
                 currentDate: dateTime.currentDate(),
                 weekday: dateTime.weekday(),
-                newSubjectItems: foundSubjects,
+                newSubjectItems: foundSubjects, 
             });
         }
     });

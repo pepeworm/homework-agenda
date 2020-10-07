@@ -58,6 +58,7 @@ h1 {
     box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
     margin: auto;
     max-width: 85%;
+    min-width: 30rem;
 
     p.weekday {
         font-weight: 700;
@@ -99,18 +100,15 @@ h1 {
 
         input.subject-item-title {
             width: 100%;
-            min-width: 25rem;
         }
 
         textarea.subject-item-body {
             resize: vertical;
             width: 100%;
-            min-width: 25rem;
         }
 
         input.subject-item-footer {
             width: 100%;
-            min-width: 25rem;
         }
     }
 
@@ -137,7 +135,6 @@ button.new-subject-item-submit {
 }
 
 form.subject-delete-form {
-    width: 90%;
     margin: auto;
 
     .subject-block {

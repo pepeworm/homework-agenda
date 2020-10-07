@@ -56,6 +56,7 @@ h1.home-header {
           box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
   margin: auto;
   max-width: 85%;
+  min-width: 30rem;
 }
 
 .subject-box p.weekday {
@@ -99,18 +100,15 @@ h1.home-header {
 
 .subject-box .new-subject-form input.subject-item-title {
   width: 100%;
-  min-width: 25rem;
 }
 
 .subject-box .new-subject-form textarea.subject-item-body {
   resize: vertical;
   width: 100%;
-  min-width: 25rem;
 }
 
 .subject-box .new-subject-form input.subject-item-footer {
   width: 100%;
-  min-width: 25rem;
 }
 
 .subject-box ::-webkit-input-placeholder {
@@ -150,7 +148,6 @@ button.new-subject-item-submit:focus {
 }
 
 form.subject-delete-form {
-  width: 90%;
   margin: auto;
 }
 

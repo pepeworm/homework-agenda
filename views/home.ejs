@@ -1,5 +1,30 @@
 <%- include("./partials/homeHeader") -%>
 
+<nav>
+    <a href="/" class="nav-home-link"><img src="./images/favicon.ico" alt="logo"></a>
+
+    <div class="hamburger-container">
+        <div class="line-one"></div>
+        <div class="line-two"></div>
+        <div class="line-three"></div>
+
+        <div class="toggle-one"></div>
+        <div class="toggle-two"></div>
+    </div>
+
+    <ul>
+        <% if (newSubjectItems.length > 0) { %>
+        <% newSubjectItems.forEach((subjectItem) => {%>
+        <li>
+            <a href="/subjects/<%= subjectItem._id %>"><%= subjectItem.subjectNames %></a>
+        </li>
+        <% }); %>
+        <% } else { %>
+        <li>Woo hoo! You have completed all your work!</li>
+        <% } %>
+    </ul>
+</nav>
+
 <h1 class="home-header"><%= currentDate %></h1>
 
 <div class="subject-box">

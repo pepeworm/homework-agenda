@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homework Agenda</title>
+    <title>Agenda</title>
 
     <!-- Favicon -->
 
@@ -23,14 +23,24 @@
 <body>
     <% if (foundItem.subjectTitleName && foundItem.subjectBodyName && foundItem.subjectFooterName) { %>
     <h1><%= foundItem.subjectTitleName %></h1>
-    <p class="body-p"><%= foundItem.subjectBodyName %></p>
-    <h3><%= foundItem.subjectFooterName %></h3>
+
+    <div class="box">
+        <p class="body-p"><%= foundItem.subjectBodyName %></p>
+        <hr>
+        <h3><%= foundItem.subjectFooterName %></h3>
+    </div>
     <% } else if (foundItem.subjectTitleName && foundItem.subjectBodyName && !foundItem.subjectFooterName) { %>
     <h1><%= foundItem.subjectTitleName %></h1>
-    <p class="body-p"><%= foundItem.subjectBodyName %></p>
+
+    <div class="box">
+        <p class="body-p"><%= foundItem.subjectBodyName %></p>
+    </div>
     <% } else { %>
     <h1><%= foundItem.subjectTitleName %></h1>
-    <h3><%= foundItem.subjectFooterName %></h3>
+
+    <div class="box">
+        <h3><%= foundItem.subjectFooterName %></h3>
+    </div>
     <% } %>
 </body>
 

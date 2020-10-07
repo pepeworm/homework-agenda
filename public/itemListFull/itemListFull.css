@@ -35,41 +35,43 @@ body {
 }
 
 h1 {
-  background: #fff;
-  padding: 0.6rem 2.8rem;
-  border-radius: 0.4rem;
+  font-size: 2.8rem;
+  padding: 0.8rem 2.5rem;
+  background: white;
+  border-radius: 0.5rem;
+  margin: 0 auto 3rem;
+  -webkit-box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+          box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
   border: 1px solid #353535;
   max-width: 85%;
-  font-size: 3.5rem;
-  margin: 0 auto 2rem;
-  display: block;
 }
 
-p.body-p {
-  display: block;
-  margin: 0 auto 2rem;
-  font-weight: 600;
-  font-size: 1.4rem;
-  background: #fff;
-  padding: 1rem 2rem;
-  border-radius: 0.4rem;
+.box {
   border: 1px solid #353535;
-  max-width: 60ch;
+  background: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem 3rem;
+  text-align: center;
+  -webkit-box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+          box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+  margin: auto;
+  max-width: 55%;
 }
 
-h3 {
-  display: block;
-  margin: 0 auto;
-  font-weight: 400;
+.box hr {
+  border: 1px solid #577be9;
+  border-width: 0 0 1px 0;
+  margin: 1rem auto;
+}
+
+.box p {
+  font-weight: 500;
   font-size: 1.2rem;
-  background: #fff;
-  padding: 0.6rem 2.8rem;
-  border-radius: 0.4rem;
-  border: 1px solid #353535;
-  max-width: 85%;
-  font-size: 3.5rem;
-  margin: 0 auto 2rem;
-  display: block;
+}
+
+.box h3 {
+  font-weight: 400;
+  font-size: 1rem;
 }
 
 footer p {

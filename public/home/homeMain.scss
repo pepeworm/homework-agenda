@@ -26,7 +26,7 @@ $lightBlue: rgb(87, 123, 233);
 }
 
 html {
-    padding: 6rem 0;
+    padding: 0 0 6rem;
     overflow-x: hidden;
 
     background-color: $lightBlue;
@@ -34,6 +34,130 @@ html {
 
 body {
     @include boxWidth();
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: rgba(#000, 0.8);
+    padding: 0.8rem 2.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto 6rem;
+    width: 100%;
+
+    img {
+        width: 2rem;
+    }
+
+    .hamburger-container {
+        width: 28px;
+        height: 19px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        cursor: pointer;
+        position: absolute;
+        right: 2.5rem;
+
+        .line-one,
+        .line-two,
+        .line-three {
+            width: 100%;
+            height: 3px;
+            border-radius: 0.4rem;
+            background: rgba(#fff, 0.7);
+        }
+
+        &:hover {
+            .line-one,
+            .line-two,
+            .line-three {
+                background: #e9e9e9;
+            }
+        }
+
+        .toggle-one,
+        .toggle-two {
+            display: none;
+        }
+
+        &.burger-click {
+            top: 1.8rem;
+
+            .line-one,
+            .line-two,
+            .line-three {
+                display: none;
+            }
+
+            .toggle-one,
+            .toggle-two {
+                display: block;
+                width: 100%;
+                height: 3px;
+                border-radius: 0.4rem;
+                background: rgba(#fff, 0.8);
+                position: absolute;
+            }
+
+            &:hover {
+                .toggle-one,
+                .toggle-two {
+                    background: #e9e9e9;
+                }
+            }
+
+            .toggle-one {
+                transform: rotate(45deg);
+            }
+
+            .toggle-two {
+                transform: rotate(-45deg);
+            }
+        }
+    }
+
+    ul {
+        padding: 0;
+        display: none;
+
+        li {
+            list-style: none;
+            margin: 0.4rem 0;
+
+            a {
+                text-decoration: none;
+                font-size: 1.15rem;
+                color: rgba(#fff, 0.8);
+                transition: color 80ms linear;
+
+                &:hover {
+                    color: #e9e9e9;
+                }
+            }
+        }
+    }
+
+    &.nav-open {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        ul {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            li {
+                text-align: center;
+            }
+        }
+    }
 }
 
 h1 {
@@ -72,13 +196,15 @@ h1 {
 
     .new-subject-form {
         margin-top: 2.7rem;
-        display: block;
+        display: flex;
+        flex-direction: row;
 
         input[name="newSubject"] {
             border: none;
             outline: none;
             padding: 0.5rem 0;
             font-size: 1.3rem;
+            width: 100%;
 
             transition: box-shadow 200ms linear;
 
@@ -98,7 +224,7 @@ h1 {
             margin-left: 1rem;
             cursor: pointer;
             min-height: 50px;
-            width: 50px;
+            min-width: 50px;
             border-radius: 50%;
             border-color: transparent;
             background-color: rgba(#2f7ef5, 0.9);
@@ -128,7 +254,7 @@ h1 {
                 &:checked {
                     outline: none;
 
-                    &+a {
+                    & + a {
                         text-decoration: line-through;
                         text-decoration-color: $blue;
                     }
