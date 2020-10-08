@@ -1,18 +1,4 @@
-// jshint esversion:6
-
-const subjectInputFocus = () => {
-    const subjectInput = document.querySelector("input[name=newSubject]");
-
-    subjectInput.removeAttribute("placeholder");
-};
-
-const subjectInputBlur = () => {
-    const subjectInput = document.querySelector("input[name=newSubject]");
-
-    subjectInput.setAttribute("placeholder", "Subject Name");
-};
-
-// Navbar
+//jshint esversion:6
 
 const navbar = document.querySelector("nav");
 const hamburger = document.querySelector(".hamburger-container");

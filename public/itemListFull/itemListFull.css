@@ -19,7 +19,7 @@
 }
 
 html {
-  padding: 6rem 0;
+  padding: 0 0 6rem;
   overflow-x: hidden;
   background-color: #577be9;
 }
@@ -32,6 +32,166 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+}
+
+nav {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 0.8rem 2.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0 auto 6rem;
+  width: 100%;
+}
+
+nav img {
+  width: 2rem;
+}
+
+nav .hamburger-container {
+  width: 28px;
+  height: 19px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  cursor: pointer;
+  position: absolute;
+  right: 2.5rem;
+}
+
+nav .hamburger-container .line-one,
+nav .hamburger-container .line-two,
+nav .hamburger-container .line-three {
+  width: 100%;
+  height: 3px;
+  border-radius: 0.4rem;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+nav .hamburger-container:hover .line-one,
+nav .hamburger-container:hover .line-two,
+nav .hamburger-container:hover .line-three {
+  background: #e9e9e9;
+}
+
+nav .hamburger-container .toggle-one,
+nav .hamburger-container .toggle-two {
+  display: none;
+}
+
+nav .hamburger-container.burger-click {
+  top: 1.8rem;
+}
+
+nav .hamburger-container.burger-click .line-one,
+nav .hamburger-container.burger-click .line-two,
+nav .hamburger-container.burger-click .line-three {
+  display: none;
+}
+
+nav .hamburger-container.burger-click .toggle-one,
+nav .hamburger-container.burger-click .toggle-two {
+  display: block;
+  width: 100%;
+  height: 3px;
+  border-radius: 0.4rem;
+  background: rgba(255, 255, 255, 0.8);
+  position: absolute;
+}
+
+nav .hamburger-container.burger-click:hover .toggle-one,
+nav .hamburger-container.burger-click:hover .toggle-two {
+  background: #e9e9e9;
+}
+
+nav .hamburger-container.burger-click .toggle-one {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
+nav .hamburger-container.burger-click .toggle-two {
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+
+nav ul {
+  padding: 0;
+  display: none;
+}
+
+nav ul li {
+  list-style: none;
+  margin: 0.4rem 0;
+}
+
+nav ul li:first-child {
+  margin-top: 1.5rem;
+}
+
+nav ul li.no-work {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+nav ul li a {
+  text-decoration: none;
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.8);
+  -webkit-transition: color 80ms linear;
+  transition: color 80ms linear;
+}
+
+nav ul li a:hover {
+  color: #e9e9e9;
+}
+
+nav.nav-open {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+nav.nav-open ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+}
+
+nav.nav-open ul li {
+  text-align: center;
 }
 
 h1 {
@@ -74,8 +234,42 @@ h1 {
   font-size: 1rem;
 }
 
+footer {
+  margin-top: 2.8rem;
+}
+
+footer a {
+  color: #e9e9e9;
+}
+
 footer p {
   color: #e9e9e9;
-  margin-top: 3rem;
+  margin-bottom: 1.2rem;
+}
+
+footer a {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #e9e9e9;
+  border-radius: 0.4rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+  background: transparent;
+  -webkit-transition: color 200ms linear, background 200ms linear;
+  transition: color 200ms linear, background 200ms linear;
+}
+
+footer a:hover {
+  background: #e9e9e9;
+  color: #577be9;
+}
+
+footer a:hover i {
+  color: #577be9;
+}
+
+footer a i {
+  color: #e9e9e9;
+  font-size: 0.9rem;
+  margin-right: 0.1rem;
 }
 /*# sourceMappingURL=itemListFull.css.map */

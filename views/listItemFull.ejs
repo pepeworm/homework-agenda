@@ -18,9 +18,43 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+        integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 </head>
 
 <body>
+    <nav>
+        <a href="/" class="nav-home-link"><img src="../../images/favicon.ico" alt="logo"></a>
+
+        <div class="hamburger-container">
+            <div class="line-one"></div>
+            <div class="line-two"></div>
+            <div class="line-three"></div>
+
+            <div class="toggle-one"></div>
+            <div class="toggle-two"></div>
+        </div>
+
+        <ul>
+            <% if (newSubjectItems.length > 0) { %>
+            <% newSubjectItems.forEach((subjectItem) => {%>
+            <li>
+                <% if (subjectItem.subjectNames.length >= 25) { %>
+                <a href="/subjects/<%= subjectItem._id %>"><%= subjectItem.subjectNames.slice(0, 26) + "..." %></a>
+                <% } else { %>
+                <a href="/subjects/<%= subjectItem._id %>"><%= subjectItem.subjectNames %></a>
+                <% } %>
+            </li>
+            <% }); %>
+            <% } else { %>
+            <li class="no-work">Woo hoo! You have completed all your work!</li>
+            <% } %>
+        </ul>
+    </nav>
+
     <% if (foundItem.subjectTitleName && foundItem.subjectBodyName && foundItem.subjectFooterName) { %>
     <h1><%= foundItem.subjectTitleName %></h1>
 
@@ -42,10 +76,13 @@
         <h3><%= foundItem.subjectFooterName %></h3>
     </div>
     <% } %>
+
+    <script src="../../itemListFull/itemListFull.js"></script>
 </body>
 
 <footer>
     <p>&copy; 2020 Pepeworm</p>
+    <a href="https://github.com/pepeworm/homework-agenda" target="_blank"><i class="fab fa-github"></i> View Code</a>
 </footer>
 
 </html>

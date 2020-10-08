@@ -55,7 +55,7 @@ app.get("/", (req, res) => {
             res.render("home", {
                 currentDate: dateTime.currentDate(),
                 weekday: dateTime.weekday(),
-                newSubjectItems: foundSubjects, 
+                newSubjectItems: foundSubjects,
             });
         }
     });
@@ -121,11 +121,18 @@ app.get("/subjects/:id", (req, res) => {
                     if (err) {
                         console.log(err);
                     } else {
-                        res.render("itemsList", {
-                            weekday: dateTime.weekday(),
-                            subject: foundSubject.subjectNames,
-                            subjectId: subjectId,
-                            newListItems: foundItemList,
+                        Subject.find({}, (err, foundSubjects) => {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                res.render("itemsList", {
+                                    weekday: dateTime.weekday(),
+                                    subject: foundSubject.subjectNames,
+                                    subjectId: subjectId,
+                                    newListItems: foundItemList,
+                                    newSubjectItems: foundSubjects,
+                                });
+                            }
                         });
                     }
                 }
@@ -162,6 +169,21 @@ app.post("/subjects/:id", (req, res) => {
     });
 });
 
+app.post("/deleteItem", (req, res) => {
+    const itemDeleteId = req.body.listItemDelete;
+    const itemDeleteParentId = req.body.listItemParentId;
+
+    ItemList.deleteOne({ _id: itemDeleteId }, (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Successfully deleted item");
+
+            res.redirect("/subjects/" + itemDeleteParentId);
+        }
+    });
+});
+
 // * Subject Items Route
 
 app.get("/subjects/items/:listItemId", (req, res) => {
@@ -171,8 +193,15 @@ app.get("/subjects/items/:listItemId", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("listItemFull", {
-                foundItem: foundItem,
+            Subject.find({}, (err, foundSubjects) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.render("listItemFull", {
+                        foundItem: foundItem,
+                        newSubjectItems: foundSubjects,
+                    });
+                }
             });
         }
     });

@@ -16,11 +16,15 @@
         <% if (newSubjectItems.length > 0) { %>
         <% newSubjectItems.forEach((subjectItem) => {%>
         <li>
+            <% if (subjectItem.subjectNames.length >= 25) { %>
+            <a href="/subjects/<%= subjectItem._id %>"><%= subjectItem.subjectNames.slice(0, 26) + "..." %></a>
+            <% } else { %>
             <a href="/subjects/<%= subjectItem._id %>"><%= subjectItem.subjectNames %></a>
+            <% } %>
         </li>
         <% }); %>
         <% } else { %>
-        <li>Woo hoo! You have completed all your work!</li>
+        <li class="no-work">Woo hoo! You have completed all your work!</li>
         <% } %>
     </ul>
 </nav>

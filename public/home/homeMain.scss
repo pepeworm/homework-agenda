@@ -74,6 +74,7 @@ nav {
         }
 
         &:hover {
+
             .line-one,
             .line-two,
             .line-three {
@@ -106,6 +107,7 @@ nav {
             }
 
             &:hover {
+
                 .toggle-one,
                 .toggle-two {
                     background: #e9e9e9;
@@ -129,6 +131,14 @@ nav {
         li {
             list-style: none;
             margin: 0.4rem 0;
+
+            &:first-child {
+                margin-top: 1.5rem;
+            }
+
+            &.no-work {
+                color: rgba(#fff, 0.8);
+            }
 
             a {
                 text-decoration: none;
@@ -254,7 +264,7 @@ h1 {
                 &:checked {
                     outline: none;
 
-                    & + a {
+                    &+a {
                         text-decoration: line-through;
                         text-decoration-color: $blue;
                     }
@@ -277,8 +287,39 @@ h1 {
 }
 
 footer {
+    margin-top: 2.8rem;
+
+    a {
+        color: #e9e9e9;
+    }
+
     p {
         color: #e9e9e9;
-        margin-top: 3rem;
+        margin-bottom: 1.2rem;
+    }
+
+    a {
+        padding: 0.4rem 0.6rem;
+        border: 1px solid #e9e9e9;
+        border-radius: 0.4rem;
+        font-size: 0.9rem;
+        text-decoration: none;
+        background: transparent;
+        transition: color 200ms linear, background 200ms linear;
+
+        &:hover {
+            background: #e9e9e9;
+            color: $lightBlue;
+
+            i {
+                color: $lightBlue;
+            }
+        }
+
+        i {
+            color: #e9e9e9;
+            font-size: 0.9rem;
+            margin-right: 0.1rem;
+        }
     }
 }
