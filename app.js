@@ -10,7 +10,7 @@ const dateTime = require("./dateTime");
 
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/homeworkAgenda", {
+mongoose.connect("mongodb+srv://admin-pepeworm:pepeworm@cluster0.v8jsq.mongodb.net/homeworkAgenda", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
