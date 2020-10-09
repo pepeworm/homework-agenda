@@ -1,0 +1,28 @@
+{
+  "name": "homework-agenda",
+  "version": "1.0.0",
+  "description": "Website for recording homework",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pepeworm/homework-agenda.git"
+  },
+  "author": "Hao",
+  "license": "ISC",
+  "engines": {
+    "node": "12.16.1"
+  },
+  "bugs": {
+    "url": "https://github.com/pepeworm/homework-agenda/issues"
+  },
+  "homepage": "https://github.com/pepeworm/homework-agenda#readme",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "lodash": "^4.17.20",
+    "mongoose": "^5.10.5"
+  }
+}
