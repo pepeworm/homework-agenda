@@ -8,11 +8,11 @@
 
     <!-- Favicon -->
 
-    <link rel="icon" href="../images/favicon.ico">
+    <link rel="icon" href="../../images/favicon.ico">
 
     <!-- CSS -->
 
-    <link rel="stylesheet" href="../itemList/itemList.css">
+    <link rel="stylesheet" href="../../itemList/itemList.css">
 
     <!-- Font Family -->
 
@@ -27,7 +27,7 @@
 
 <body>
     <nav>
-        <a href="/" class="nav-home-link"><img src="../images/favicon.ico" alt="logo"></a>
+        <a href="/home" class="nav-home-link"><img src="../../images/favicon.ico" alt="logo"></a>
 
         <div class="hamburger-container">
             <div class="line-one"></div>
@@ -43,9 +43,9 @@
             <% newSubjectItems.forEach((subjectItem) => {%>
             <li>
                 <% if (subjectItem.subjectNames.length >= 25) { %>
-                <a href="/subjects/<%= subjectItem._id %>"><%= subjectItem.subjectNames.slice(0, 26) + "..." %></a>
+                <a href="/home/subjects/<%= subjectItem._id %>"><%= subjectItem.subjectNames.slice(0, 26) + "..." %></a>
                 <% } else { %>
-                <a href="/subjects/<%= subjectItem._id %>"><%= subjectItem.subjectNames %></a>
+                <a href="/home/subjects/<%= subjectItem._id %>"><%= subjectItem.subjectNames %></a>
                 <% } %>
             </li>
             <% }); %>
@@ -74,7 +74,7 @@
                 <% } %>
 
                 <% if (listItem.subjectBodyName.length > 0 || listItem.subjectFooterName.length > 0) { %>
-                <a href="/subjects/items/<%= listItem._id %>" class="extra-info">(...)</a>
+                <a href="/home/subjects/items/<%= listItem._id %>" class="extra-info">(...)</a>
                 <% }; %>
             </div>
         </form>
@@ -82,7 +82,7 @@
 
         <hr class="hr-two">
 
-        <form action="/subjects/<%= subjectId %>" method="POST" class="new-subject-form">
+        <form action="/home/subjects/<%= subjectId %>" method="POST" class="new-subject-form">
             <div class="fields">
                 <input type="text" name="subjectItemTitle" class="subject-item-title subject-item-fields"
                     placeholder="Name of Item" required autofocus onfocus="subjectItemTitleFocus()"
@@ -98,7 +98,7 @@
         </form>
     </div>
 
-    <script src="../itemList/itemList.js"></script>
+    <script src="../../itemList/itemList.js"></script>
 </body>
 
 <footer>

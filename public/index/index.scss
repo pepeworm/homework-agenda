@@ -1,0 +1,241 @@
+// SCSS Variables
+
+$darkGrey: #2e2e2e;
+$lightGrey: #e9e9e9;
+$blue: #0b5bd5;
+$lightBlue: rgb(87, 123, 233);
+
+::selection {
+    color: #fff;
+    background: $darkGrey;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Raleway", sans-serif;
+    color: $lightGrey;
+    text-align: center;
+}
+
+body {
+    background: $lightBlue;
+}
+
+h1 {
+    font-size: 2.7rem;
+}   
+
+h2 {
+    font-size: 2.5rem;
+}
+
+h3 {
+    font-size: 1.8rem;
+}
+
+.btn-container {
+    .btn {
+        text-decoration: none;
+        padding: 0.4rem 0.6rem;
+
+        &.btn-login {
+            background: none;
+            transition: background 100ms linear, color 100ms linear;
+        }
+    }
+}
+
+nav {
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: #232323;
+    padding: 0.8rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+
+    img[alt=logo] {
+        width: 2rem;
+    }
+
+    .btn-container {
+        .btn {
+            border: 1px solid $lightBlue;
+
+            &:last-child {
+                margin-left: 0.5rem;
+            }
+
+            &.btn-register {
+                background: $lightBlue;
+            }
+
+            &.btn-login {
+                color: $lightBlue;
+                background: none;
+                transition: background 100ms linear, color 100ms linear;
+
+                &:hover {
+                    background: $lightBlue;
+                    color: $lightGrey;
+                }
+            }
+        }
+    }
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.home {
+    margin: 0;
+    padding: 6rem 0 4rem;
+    background-image: linear-gradient(10.2deg, $lightGrey 50%, $lightBlue 50%);
+
+    h1, p {
+        max-width: 90%;
+        margin: auto;
+    }
+
+    p {
+        margin-top: 1.1rem;
+        font-size: 1.2rem;
+    }
+
+    img {
+        margin: 3rem auto;
+        min-width: 25rem;
+    }
+
+    @media (max-width: 768px) {
+        img {
+            width: 70%;
+            min-width: 20rem;
+        }
+    }
+} 
+
+.features {
+    margin: 0;
+    padding: 0 0 8rem;
+    background: $lightGrey;
+    color: $darkGrey;
+
+    hr {
+        width: 15%;
+        border-width: 0.8rem;
+        border-color: $lightBlue;
+        border-style: none none dotted none;
+        margin: 5rem auto;
+    }
+
+    h2, h3, p {
+        color: $darkGrey;
+    }
+
+    h2 {
+        margin-bottom: 4rem;
+    }
+
+    .feature-box {
+        .head-content {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+
+            h3, p {
+                max-width: 90%;
+                margin-right: auto;
+                margin-left: auto;
+                margin-bottom: 1rem;
+                max-width: 60rem;
+            }
+        }
+
+        img {
+            margin-top: 1rem;
+            max-width: 70rem;
+            width: 90%;
+            border: 2px solid $darkGrey;
+        }
+    }
+}
+
+.register-login {
+    padding: 6rem 0;
+
+    .btn-container {
+        margin-top: 2rem;
+
+        .btn {
+            border: 1px solid $lightGrey;
+
+            &:last-child {
+                margin-left: 0.5rem;
+            }
+
+            &.btn-register {
+                background: $lightGrey;
+                color: $lightBlue;
+            }
+
+            &.btn-login {
+                color: $lightGrey;
+                background: none;
+                transition: background 100ms linear, color 100ms linear;
+
+                &:hover {
+                    background: $lightGrey;
+                    color: $lightBlue;
+                }
+            }
+        }
+    }
+
+}
+
+footer {
+    margin-top: 0;
+    background: #232323;
+    padding: 2rem 0;
+
+    a {
+        color: #e9e9e9;
+    }
+
+    p {
+        color: #e9e9e9;
+        margin-bottom: 1.2rem;
+    }
+
+    a {
+        padding: 0.4rem 0.6rem;
+        border: 1px solid #e9e9e9;
+        font-size: 0.9rem;
+        text-decoration: none;
+        background: transparent;
+        transition: color 200ms linear, background 200ms linear;
+
+        &:hover {
+            background: #e9e9e9;
+            color: $darkGrey;
+
+            i {
+                color: $darkGrey
+            }
+        }
+
+        i {
+            color: #e9e9e9;
+            font-size: 0.9rem;
+            margin-right: 0.1rem;
+        }
+    }
+}

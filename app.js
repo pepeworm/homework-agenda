@@ -2,19 +2,27 @@
 
 // * Requiring Modules
 
+require("dotenv").config();
 const express = require("express");
 const _ = require("lodash");
+const session = require("express-session");
+const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose");
 const dateTime = require("./dateTime");
 
 // * Mongoose
 
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb+srv://admin-pepeworm:pepeworm@cluster0.v8jsq.mongodb.net/homeworkAgenda", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-});
+mongoose.connect(
+    "mongodb://localhost:27017/homeworkAgenda",
+    // "mongodb+srv://admin-pepeworm:pepeworm@cluster0.v8jsq.mongodb.net/homeworkAgenda",
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+    }
+);
 
 // * Express.js
 
@@ -24,6 +32,15 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
+
+// * MongoDB (Accounts)
+
+const accountSchema = new mongoose.Schema({
+   email: String,
+   password: String, 
+});
+
+const Account = new mongoose.model("Account", accountSchema);
 
 // * MongoDB (Subject Page)
 
@@ -48,34 +65,61 @@ const ItemList = new mongoose.model("Item", itemListSchema);
 // * Root Route
 
 app.get("/", (req, res) => {
-    Subject.find({}, (err, foundSubjects) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render("home", {
-                currentDate: dateTime.currentDate(),
-                weekday: dateTime.weekday(),
-                newSubjectItems: foundSubjects,
-            });
-        }
-    });
+    res.render("index");
 });
 
-app.post("/", (req, res) => {
-    const subject = req.body.newSubject;
+// * Register Route
 
-    const subjectItem = new Subject({
-        subjectNames: subject,
+app.route("/register")
+    .get((req, res) => {
+        res.render("register");
+    })
+    .post((req, res) => {
+        const email = req.body.email;
+        const password = req.body.password;
+
+        console.log(email, password);
+        res.redirect("/register");
     });
 
-    subjectItem.save((err) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.redirect("/");
-        }
-    });
+// * Login Route
+
+app.get("/login", (req, res) => {
+    res.render("login");
 });
+
+// * Home Route
+
+app.route("/home")
+    .get((req, res) => {
+        Subject.find({}, (err, foundSubjects) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render("home", {
+                    currentDate: dateTime.currentDate(),
+                    weekday: dateTime.weekday(),
+                    newSubjectItems: foundSubjects,
+                });
+            }
+        });
+    })
+
+    .post((req, res) => {
+        const subject = req.body.newSubject;
+
+        const subjectItem = new Subject({
+            subjectNames: subject,
+        });
+
+        subjectItem.save((err) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.redirect("/home");
+            }
+        });
+    });
 
 // * /deleteSubject Route
 
@@ -96,7 +140,7 @@ app.post("/deleteSubject", (req, res) => {
                             if (err) {
                                 console.log(err);
                             } else {
-                                res.redirect("/");
+                                res.redirect("/home");
                             }
                         });
                     }
@@ -108,7 +152,7 @@ app.post("/deleteSubject", (req, res) => {
 
 // * Route Parameters (Subjects)
 
-app.get("/subjects/:id", (req, res) => {
+app.route("/home/subjects/:id").get((req, res) => {
     const subjectId = req.params.id;
 
     Subject.findOne({ _id: subjectId }, (err, foundSubject) => {
@@ -141,7 +185,7 @@ app.get("/subjects/:id", (req, res) => {
     });
 });
 
-app.post("/subjects/:id", (req, res) => {
+app.post("/home/subjects/:id", (req, res) => {
     const newItemTitle = req.body.subjectItemTitle;
     const newItemBody = req.body.subjectItemBody;
     const newItemFooter = req.body.subjectItemFooter;
@@ -162,7 +206,7 @@ app.post("/subjects/:id", (req, res) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.redirect("/subjects/" + req.params.id);
+                    res.redirect("/home/subjects/" + req.params.id);
                 }
             });
         }
@@ -179,14 +223,14 @@ app.post("/deleteItem", (req, res) => {
         } else {
             console.log("Successfully deleted item");
 
-            res.redirect("/subjects/" + itemDeleteParentId);
+            res.redirect("/home/subjects/" + itemDeleteParentId);
         }
     });
 });
 
 // * Subject Items Route
 
-app.get("/subjects/items/:listItemId", (req, res) => {
+app.get("/home/subjects/items/:listItemId", (req, res) => {
     const listItemId = req.params.listItemId;
 
     ItemList.findOne({ _id: listItemId }, (err, foundItem) => {

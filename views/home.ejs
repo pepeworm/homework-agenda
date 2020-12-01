@@ -1,7 +1,7 @@
 <%- include("./partials/homeHeader") -%>
 
 <nav>
-    <a href="/" class="nav-home-link"><img src="./images/favicon.ico" alt="logo"></a>
+    <a href="/home" class="nav-home-link"><img src="./../images/favicon.ico" alt="logo"></a>
 
     <div class="hamburger-container">
         <div class="line-one"></div>
@@ -14,12 +14,12 @@
 
     <ul>
         <% if (newSubjectItems.length > 0) { %>
-        <% newSubjectItems.forEach((subjectItem) => {%>
+        <% newSubjectItems.forEach((subjectItem) => { %>
         <li>
             <% if (subjectItem.subjectNames.length >= 25) { %>
-            <a href="/subjects/<%= subjectItem._id %>"><%= subjectItem.subjectNames.slice(0, 26) + "..." %></a>
+            <a href="/home/subjects/<%= subjectItem._id %>"><%= subjectItem.subjectNames.slice(0, 26) + "..." %></a>
             <% } else { %>
-            <a href="/subjects/<%= subjectItem._id %>"><%= subjectItem.subjectNames %></a>
+            <a href="/home/subjects/<%= subjectItem._id %>"><%= subjectItem.subjectNames %></a>
             <% } %>
         </li>
         <% }); %>
@@ -39,6 +39,7 @@
     <form action="/deleteSubject" method="POST" class="subject-delete-form">
         <div class="subject-block">
             <input type="checkbox" name="subjectDeleteCheckbox" onchange="this.form.submit()" value="<%= item._id %>">
+
             <% if (item.subjectNames.length > 30) { %>
             <a href="<%= "subjects" + "/" + item._id %>"
                 class="subject-link"><%= item.subjectNames.slice(0, 31) + "..." %></a>
@@ -49,7 +50,7 @@
     </form>
     <% }); %>
 
-    <form action="/" method="POST" class="new-subject-form">
+    <form action="/home" method="POST" class="new-subject-form">
         <input type="text" name="newSubject" placeholder="Subject Name" onfocus="subjectInputFocus()"
             onblur="subjectInputBlur()" autocomplete="off" autofocus required>
 

@@ -1,0 +1,249 @@
+::-moz-selection {
+  color: #fff;
+  background: #2e2e2e;
+}
+
+::selection {
+  color: #fff;
+  background: #2e2e2e;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: "Raleway", sans-serif;
+  color: #e9e9e9;
+  text-align: center;
+}
+
+body {
+  background: #577be9;
+}
+
+h1 {
+  font-size: 2.7rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+h3 {
+  font-size: 1.8rem;
+}
+
+.btn-container .btn {
+  text-decoration: none;
+  padding: 0.4rem 0.6rem;
+}
+
+.btn-container .btn.btn-login {
+  background: none;
+  -webkit-transition: background 100ms linear, color 100ms linear;
+  transition: background 100ms linear, color 100ms linear;
+}
+
+nav {
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: #232323;
+  padding: 0.8rem 2.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0 auto;
+  width: 100%;
+}
+
+nav img[alt=logo] {
+  width: 2rem;
+}
+
+nav .btn-container .btn {
+  border: 1px solid #577be9;
+}
+
+nav .btn-container .btn:last-child {
+  margin-left: 0.5rem;
+}
+
+nav .btn-container .btn.btn-register {
+  background: #577be9;
+}
+
+nav .btn-container .btn.btn-login {
+  color: #577be9;
+  background: none;
+  -webkit-transition: background 100ms linear, color 100ms linear;
+  transition: background 100ms linear, color 100ms linear;
+}
+
+nav .btn-container .btn.btn-login:hover {
+  background: #577be9;
+  color: #e9e9e9;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.home {
+  margin: 0;
+  padding: 6rem 0 4rem;
+  background-image: linear-gradient(10.2deg, #e9e9e9 50%, #577be9 50%);
+}
+
+.home h1, .home p {
+  max-width: 90%;
+  margin: auto;
+}
+
+.home p {
+  margin-top: 1.1rem;
+  font-size: 1.2rem;
+}
+
+.home img {
+  margin: 3rem auto;
+  min-width: 25rem;
+}
+
+@media (max-width: 768px) {
+  .home img {
+    width: 70%;
+    min-width: 20rem;
+  }
+}
+
+.features {
+  margin: 0;
+  padding: 0 0 8rem;
+  background: #e9e9e9;
+  color: #2e2e2e;
+}
+
+.features hr {
+  width: 15%;
+  border-width: 0.8rem;
+  border-color: #577be9;
+  border-style: none none dotted none;
+  margin: 5rem auto;
+}
+
+.features h2, .features h3, .features p {
+  color: #2e2e2e;
+}
+
+.features h2 {
+  margin-bottom: 4rem;
+}
+
+.features .feature-box .head-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: center;
+}
+
+.features .feature-box .head-content h3, .features .feature-box .head-content p {
+  max-width: 90%;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 1rem;
+  max-width: 60rem;
+}
+
+.features .feature-box img {
+  margin-top: 1rem;
+  max-width: 70rem;
+  width: 90%;
+  border: 2px solid #2e2e2e;
+}
+
+.register-login {
+  padding: 6rem 0;
+}
+
+.register-login .btn-container {
+  margin-top: 2rem;
+}
+
+.register-login .btn-container .btn {
+  border: 1px solid #e9e9e9;
+}
+
+.register-login .btn-container .btn:last-child {
+  margin-left: 0.5rem;
+}
+
+.register-login .btn-container .btn.btn-register {
+  background: #e9e9e9;
+  color: #577be9;
+}
+
+.register-login .btn-container .btn.btn-login {
+  color: #e9e9e9;
+  background: none;
+  -webkit-transition: background 100ms linear, color 100ms linear;
+  transition: background 100ms linear, color 100ms linear;
+}
+
+.register-login .btn-container .btn.btn-login:hover {
+  background: #e9e9e9;
+  color: #577be9;
+}
+
+footer {
+  margin-top: 0;
+  background: #232323;
+  padding: 2rem 0;
+}
+
+footer a {
+  color: #e9e9e9;
+}
+
+footer p {
+  color: #e9e9e9;
+  margin-bottom: 1.2rem;
+}
+
+footer a {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #e9e9e9;
+  font-size: 0.9rem;
+  text-decoration: none;
+  background: transparent;
+  -webkit-transition: color 200ms linear, background 200ms linear;
+  transition: color 200ms linear, background 200ms linear;
+}
+
+footer a:hover {
+  background: #e9e9e9;
+  color: #2e2e2e;
+}
+
+footer a:hover i {
+  color: #2e2e2e;
+}
+
+footer a i {
+  color: #e9e9e9;
+  font-size: 0.9rem;
+  margin-right: 0.1rem;
+}
+/*# sourceMappingURL=index.css.map */
