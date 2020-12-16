@@ -5,14 +5,33 @@
 require("dotenv").config();
 const express = require("express");
 const _ = require("lodash");
-const session = require("express-session");
-const passport = require("passport");
-const passportLocalMongoose = require("passport-local-mongoose");
+// const session = require("express-session");
+// const passport = require("passport");
+// const passportLocalMongoose = require("passport-local-mongoose");
 const dateTime = require("./dateTime");
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+
+// * Express.js
+
+const app = express();
+
+app.set("view engine", "ejs");
+
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+// app.use(
+//     session({
+//         secret: "This is a secret",
+//         resave: false,
+//         saveUninitialized: false,
+//     })
+// );
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 // * Mongoose
-
-const mongoose = require("mongoose");
 
 mongoose.connect(
     "mongodb://localhost:27017/homeworkAgenda",
@@ -21,26 +40,28 @@ mongoose.connect(
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useFindAndModify: false,
+        useCreateIndex: true,
     }
 );
-
-// * Express.js
-
-const app = express();
-
-app.use(express.static("public"));
-app.use(express.urlencoded({ extended: true }));
-
-app.set("view engine", "ejs");
 
 // * MongoDB (Accounts)
 
 const accountSchema = new mongoose.Schema({
-   email: String,
-   password: String, 
+    email: String,
+    password: {
+        type: String,
+        unique: false,
+    },
 });
 
+// accountSchema.plugin(passportLocalMongoose);
+
 const Account = new mongoose.model("Account", accountSchema);
+
+// passport.use(Account.createStrategy());
+
+// passport.serializeUser(Account.serializeUser());
+// passport.deserializeUser(Account.deserializeUser());
 
 // * MongoDB (Subject Page)
 
@@ -72,14 +93,40 @@ app.get("/", (req, res) => {
 
 app.route("/register")
     .get((req, res) => {
-        res.render("register");
+        res.render("register", { err: "" });
     })
     .post((req, res) => {
         const email = req.body.email;
         const password = req.body.password;
 
-        console.log(email, password);
-        res.redirect("/register");
+        Account.findOne({ email: email }, (err, foundEmail) => {
+            if (err) {
+                console.log(err);
+            } else {
+                if (foundEmail) {
+                    res.render("register", { err: "emailErr" });
+                } else {
+                    bcrypt.hash(password, saltRounds, (err, hash) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                        const newAccount = new Account({
+                            email: email,
+                            password: hash,
+                        });
+
+                        newAccount.save((err) => {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                res.redirect("/home");
+                            }
+                        });
+                    }
+                    });
+                }
+            }
+        });
     });
 
 // * Login Route
