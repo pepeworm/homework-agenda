@@ -104,20 +104,7 @@ app.route("/register")
                                         if (err) {
                                             console.log(err);
                                         } else {
-                                            Subject.find(
-                                                {},
-                                                (err, foundSubjects) => {
-                                                    if (err) {
-                                                        console.log(err);
-                                                    } else {
-                                                        res.render("home", {
-                                                            currentDate: dateTime.currentDate(),
-                                                            weekday: dateTime.weekday(),
-                                                            newSubjectItems: foundSubjects,
-                                                        });
-                                                    }
-                                                }
-                                            );
+                                            res.redirect("/home");
                                         }
                                     });
                                 }
@@ -154,17 +141,7 @@ app.route("/login")
                                 console.log(err);
                             } else {
                                 if (result === true) {
-                                    Subject.find({}, (err, foundSubjects) => {
-                                        if (err) {
-                                            console.log(err);
-                                        } else {
-                                            res.render("home", {
-                                                currentDate: dateTime.currentDate(),
-                                                weekday: dateTime.weekday(),
-                                                newSubjectItems: foundSubjects,
-                                            });
-                                        }
-                                    });
+                                    res.redirect("/home");
                                 } else {
                                     res.render("login", { err: "passwordErr" });
                                 }
@@ -175,24 +152,39 @@ app.route("/login")
             }
         });
     });
-    
+
 // * Home Route
 
-app.route("/home").post((req, res) => {
-    const subject = req.body.newSubject;
+app.route("/home")
+    .get((req, res) => {
+        Subject.find({}, (err, foundSubjects) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render("home", {
+                    currentDate: dateTime.currentDate(),
+                    weekday: dateTime.weekday(),
+                    newSubjectItems: foundSubjects,
+                });
+            }
+        });
+    })
 
-    const subjectItem = new Subject({
-        subjectNames: subject,
-    });
+    .post((req, res) => {
+        const subject = req.body.newSubject;
 
-    subjectItem.save((err) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.redirect("/home");
-        }
+        const subjectItem = new Subject({
+            subjectNames: subject,
+        });
+
+        subjectItem.save((err) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.redirect("/home");
+            }
+        });
     });
-});
 
 // * /deleteSubject Route
 

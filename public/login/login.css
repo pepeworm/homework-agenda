@@ -96,7 +96,6 @@ nav .btn-container .btn.btn-login:hover {
 form {
   border: 1px solid #2e2e2e;
   background: white;
-  border-radius: 0.5rem;
   padding: 1.5rem 3rem;
   text-align: center;
   -webkit-box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);

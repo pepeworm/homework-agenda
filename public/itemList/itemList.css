@@ -198,7 +198,6 @@ h1.home-header {
   font-size: 2.5rem;
   padding: 0.8rem 2.5rem;
   background: white;
-  border-radius: 0.5rem;
   margin: 0 auto 3rem;
   -webkit-box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
           box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
@@ -209,7 +208,6 @@ h1.home-header {
 .subject-box {
   border: 1px solid #353535;
   background: white;
-  border-radius: 0.5rem;
   padding: 1.5rem 3rem;
   text-align: center;
   -webkit-box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
@@ -245,7 +243,6 @@ h1.home-header {
   margin-left: auto;
   margin-right: auto;
   padding: 0.5rem 0;
-  border-radius: 0.2rem;
   border: 1px solid #353535;
   font-size: 1rem;
   color: #353535;
@@ -293,14 +290,13 @@ h1.home-header {
 
 button.new-subject-item-submit {
   margin-top: 0.5rem;
-  border: 1px solid #2f7ef5;
+  border: 1px solid #353535;
   background: #2f7ef5;
   color: #fff;
   cursor: pointer;
   padding: 0.6rem 0;
   font-size: 0.9rem;
   width: 100%;
-  border-radius: 0.5rem;
 }
 
 button.new-subject-item-submit:focus {
@@ -368,7 +364,6 @@ footer p {
 footer a {
   padding: 0.4rem 0.6rem;
   border: 1px solid #e9e9e9;
-  border-radius: 0.4rem;
   font-size: 0.9rem;
   text-decoration: none;
   background: transparent;

@@ -175,7 +175,6 @@ h1 {
     font-size: 2.8rem;
     padding: 0.8rem 2.5rem;
     background: rgb(255, 255, 255);
-    border-radius: 0.5rem;
     margin: 0 auto 3rem;
     box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
     border: 1px solid $darkGrey;
@@ -185,7 +184,6 @@ h1 {
 .box {
     border: 1px solid $darkGrey;
     background: white;
-    border-radius: 0.5rem;
     padding: 1.5rem 3rem;
     text-align: center;
     box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
@@ -224,7 +222,6 @@ footer {
     a {
         padding: 0.4rem 0.6rem;
         border: 1px solid #e9e9e9;
-        border-radius: 0.4rem;
         font-size: 0.9rem;
         text-decoration: none;
         background: transparent;
