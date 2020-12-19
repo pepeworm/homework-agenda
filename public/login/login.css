@@ -1,1 +1,215 @@
-/* No CSS *//*# sourceMappingURL=login.css.map */
+::-moz-selection {
+  color: #fff;
+  background: #2e2e2e;
+}
+
+::selection {
+  color: #fff;
+  background: #2e2e2e;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: "Raleway", sans-serif;
+  color: #e9e9e9;
+  text-align: center;
+}
+
+body {
+  background: #577be9;
+}
+
+h1 {
+  font-size: 2.7rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+h3 {
+  font-size: 1.8rem;
+}
+
+.btn-container .btn {
+  text-decoration: none;
+  padding: 0.4rem 0.6rem;
+}
+
+.btn-container .btn.btn-login {
+  background: none;
+  -webkit-transition: background 100ms linear, color 100ms linear;
+  transition: background 100ms linear, color 100ms linear;
+}
+
+nav {
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: #232323;
+  padding: 0.8rem 2.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0 auto;
+  width: 100%;
+}
+
+nav img[alt=logo] {
+  width: 2rem;
+}
+
+nav .btn-container .btn {
+  border: 1px solid #577be9;
+}
+
+nav .btn-container .btn:last-child {
+  margin-left: 0.5rem;
+}
+
+nav .btn-container .btn.btn-register {
+  background: #577be9;
+}
+
+nav .btn-container .btn.btn-login {
+  color: #577be9;
+  background: none;
+  -webkit-transition: background 100ms linear, color 100ms linear;
+  transition: background 100ms linear, color 100ms linear;
+}
+
+nav .btn-container .btn.btn-login:hover {
+  background: #577be9;
+  color: #e9e9e9;
+}
+
+form {
+  border: 1px solid #2e2e2e;
+  background: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem 3rem;
+  text-align: center;
+  -webkit-box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+          box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+  margin: auto;
+  display: inline-block;
+  max-width: 85%;
+  margin-top: 5rem;
+}
+
+form i {
+  color: #2e2e2e;
+  margin-bottom: 2rem;
+}
+
+form input {
+  color: #2e2e2e;
+  border: none;
+  outline: none;
+  padding: 0.5rem 0;
+  font-size: 1.1rem;
+  display: block;
+  -webkit-box-shadow: inset 0 -2px 0 0 rgba(46, 46, 46, 0.9);
+          box-shadow: inset 0 -2px 0 0 rgba(46, 46, 46, 0.9);
+}
+
+form input[type=password] {
+  margin-top: 1.2rem;
+}
+
+form p.err-msg {
+  color: #df0005;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+form ::-webkit-input-placeholder {
+  color: #5a5a5a;
+  opacity: 1;
+}
+
+form :-ms-input-placeholder {
+  color: #5a5a5a;
+  opacity: 1;
+}
+
+form ::-ms-input-placeholder {
+  color: #5a5a5a;
+  opacity: 1;
+}
+
+form ::placeholder {
+  color: #5a5a5a;
+  opacity: 1;
+}
+
+form button {
+  margin-top: 1.8rem;
+  cursor: pointer;
+  color: #2e2e2e;
+  background: transparent;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0;
+  border: 1px solid #2e2e2e;
+  font-size: 1rem;
+  -webkit-transition: background 100ms linear, color 100ms linear;
+  transition: background 100ms linear, color 100ms linear;
+}
+
+form button:hover {
+  background: #2e2e2e;
+  color: #e9e9e9;
+}
+
+form button:focus {
+  outline: none;
+}
+
+footer {
+  margin-top: 2.8rem;
+}
+
+footer a {
+  color: #e9e9e9;
+}
+
+footer p {
+  color: #e9e9e9;
+  margin-bottom: 1.2rem;
+}
+
+footer a {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #e9e9e9;
+  font-size: 0.9rem;
+  text-decoration: none;
+  background: transparent;
+  -webkit-transition: color 200ms linear, background 200ms linear;
+  transition: color 200ms linear, background 200ms linear;
+}
+
+footer a:hover {
+  background: #e9e9e9;
+  color: #577be9;
+}
+
+footer a:hover i {
+  color: #577be9;
+}
+
+footer a i {
+  color: #e9e9e9;
+  font-size: 0.9rem;
+  margin-right: 0.1rem;
+}
+/*# sourceMappingURL=login.css.map */
