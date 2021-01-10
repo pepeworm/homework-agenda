@@ -9,6 +9,10 @@ const dateTime = require("./dateTime");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const findOrCreate = require("mongoose-findorcreate");
 
 // * Express.js
 
@@ -40,9 +44,18 @@ const accountSchema = new mongoose.Schema({
         type: String,
         unique: false,
     },
+    signIn: false,
 });
 
 const Account = new mongoose.model("Account", accountSchema);
+
+// * Login (Check if user is logged in)
+
+const loginSchema = new mongoose.Schema({
+    logIn: [accountSchema],
+});
+
+const Login = new mongoose.model("Login", loginSchema);
 
 // * MongoDB (Subject Page)
 
@@ -104,6 +117,8 @@ app.route("/register")
                                         if (err) {
                                             console.log(err);
                                         } else {
+                                            foundEmail.signIn = true;
+
                                             res.redirect("/home");
                                         }
                                     });
@@ -141,6 +156,8 @@ app.route("/login")
                                 console.log(err);
                             } else {
                                 if (result === true) {
+                                    foundEmail.signIn = true;
+
                                     res.redirect("/home");
                                 } else {
                                     res.render("login", { err: "passwordErr" });
@@ -157,15 +174,27 @@ app.route("/login")
 
 app.route("/home")
     .get((req, res) => {
-        Subject.find({}, (err, foundSubjects) => {
+        Login.find({}, (err, foundUser) => {
             if (err) {
                 console.log(err);
             } else {
-                res.render("home", {
-                    currentDate: dateTime.currentDate(),
-                    weekday: dateTime.weekday(),
-                    newSubjectItems: foundSubjects,
-                });
+                if (foundUser.logIn === false) {
+                    res.redirect("/");
+                } else {
+                    Subject.find({}, (err, foundSubjects) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            res.render("home", {
+                                currentDate: dateTime.currentDate(),
+                                weekday: dateTime.weekday(),
+                                newSubjectItems: foundSubjects,
+                            });
+                        }
+                    });
+
+                    foundUser.logIn = false;
+                }
             }
         });
     })
