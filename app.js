@@ -7,12 +7,12 @@ const express = require("express");
 const _ = require("lodash");
 const dateTime = require("./dateTime");
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const LocalStrategy = require("passport-local").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
+const session = require("express-session");
 
 // * Express.js
 
@@ -22,6 +22,15 @@ app.set("view engine", "ejs");
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false,
+    })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // * Mongoose
 
@@ -44,18 +53,24 @@ const accountSchema = new mongoose.Schema({
         type: String,
         unique: false,
     },
-    signIn: false,
 });
+
+accountSchema.plugin(passportLocalMongoose);
+accountSchema.plugin(findOrCreate);
 
 const Account = new mongoose.model("Account", accountSchema);
 
-// * Login (Check if user is logged in)
+passport.use(Account.createStrategy());
 
-const loginSchema = new mongoose.Schema({
-    logIn: [accountSchema],
+passport.serializeUser((user, done) => {
+    done(null, user.id);
 });
 
-const Login = new mongoose.model("Login", loginSchema);
+passport.deserializeUser((id, done) => {
+    Account.findById(id, (err, user) => {
+        done(err, user);
+    });
+});
 
 // * MongoDB (Subject Page)
 
@@ -90,42 +105,21 @@ app.route("/register")
         res.render("register", { err: "" });
     })
     .post((req, res) => {
-        const email = req.body.email;
+        const email = req.body.username;
         const password = req.body.password;
 
-        Account.findOne({ email: email }, (err, foundEmail) => {
+        Account.register({ username: email }, password, (err, user) => {
             if (err) {
                 console.log(err);
+                res.redirect("/register");
             } else {
-                if (foundEmail) {
-                    res.render("register", { err: "emailErr" });
-                } else {
-                    bcrypt.genSalt(saltRounds, (err, salt) => {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            bcrypt.hash(password, salt, (err, hash) => {
-                                if (err) {
-                                    console.log(err);
-                                } else {
-                                    const newAccount = new Account({
-                                        email: email,
-                                        password: hash,
-                                    });
+                passport.authenticate("local")(req, res, () => {
+                    res.redirect("/home");
+                });
 
-                                    newAccount.save((err) => {
-                                        if (err) {
-                                            console.log(err);
-                                        } else {
-                                            foundEmail.signIn = true;
-
-                                            res.redirect("/home");
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    });
+                if (req.statusCode === 401) {
+                    console.log("Error code: 401");
+                    res.redirect("/register");
                 }
             }
         });
@@ -138,7 +132,7 @@ app.route("/login")
         res.render("login", { err: "" });
     })
     .post((req, res) => {
-        const email = req.body.email;
+        const email = req.body.username;
         const password = req.body.password;
 
         Account.findOne({ email: email }, (err, foundEmail) => {
@@ -148,23 +142,22 @@ app.route("/login")
                 if (!foundEmail) {
                     res.render("login", { err: "emailErr" });
                 } else {
-                    bcrypt.compare(
-                        password,
-                        foundEmail.password,
-                        (err, result) => {
-                            if (err) {
-                                console.log(err);
-                            } else {
-                                if (result === true) {
-                                    foundEmail.signIn = true;
-
-                                    res.redirect("/home");
-                                } else {
-                                    res.render("login", { err: "passwordErr" });
-                                }
-                            }
-                        }
-                    );
+                    // bcrypt.compare(
+                    //     password,
+                    //     foundEmail.password,
+                    //     (err, result) => {
+                    //         if (err) {
+                    //             console.log(err);
+                    //         } else {
+                    //             if (result === true) {
+                    //                 foundEmail.signIn = true;
+                    //                 res.redirect("/home");
+                    //             } else {
+                    //                 res.render("login", { err: "passwordErr" });
+                    //             }
+                    //         }
+                    //     }
+                    // );
                 }
             }
         });
@@ -174,29 +167,15 @@ app.route("/login")
 
 app.route("/home")
     .get((req, res) => {
-        Login.find({}, (err, foundUser) => {
-            if (err) {
-                console.log(err);
-            } else {
-                if (foundUser.logIn === false) {
-                    res.redirect("/");
-                } else {
-                    Subject.find({}, (err, foundSubjects) => {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            res.render("home", {
-                                currentDate: dateTime.currentDate(),
-                                weekday: dateTime.weekday(),
-                                newSubjectItems: foundSubjects,
-                            });
-                        }
-                    });
-
-                    foundUser.logIn = false;
-                }
-            }
-        });
+        if (req.isAuthenticated()) {
+            res.render("home", {
+                currentDate: dateTime.currentDate(),
+                weekday: dateTime.weekday(),
+                newSubjectItems: foundSubjects,
+            });
+        } else {
+            res.redirect("/login");
+        }
     })
 
     .post((req, res) => {
