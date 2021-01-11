@@ -168,10 +168,16 @@ app.route("/login")
 app.route("/home")
     .get((req, res) => {
         if (req.isAuthenticated()) {
-            res.render("home", {
-                currentDate: dateTime.currentDate(),
-                weekday: dateTime.weekday(),
-                newSubjectItems: foundSubjects,
+            Subject.find({}, (err, foundSubjects) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.render("home", {
+                        currentDate: dateTime.currentDate(),
+                        weekday: dateTime.weekday(),
+                        newSubjectItems: foundSubjects,
+                    });
+                }
             });
         } else {
             res.redirect("/login");
