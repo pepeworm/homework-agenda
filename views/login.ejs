@@ -39,13 +39,10 @@
         <i class="fas fa-key fa-4x"></i>
 
         <input type="email" name="username" placeholder="Email" autocomplete="off" autofocus required>
-        <% if (err === "emailErr") { %>
-        <p class="err-msg email">* Email not found</p>
-        <% } %>
 
         <input type="password" name="password" placeholder="Password" autocomplete="off" required>
-        <% if (err === "passwordErr") { %>
-        <p class="err-msg password">* Password is incorrect</p>
+        <% if (err === "emailOrPasswordErr") { %>
+        <p class="err-msg emailOrPasswordErr">* Email or password is incorrect</p>
         <% } %>
 
         <button type="submit">Login</button>
