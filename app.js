@@ -91,7 +91,7 @@ passport.use(
 // * MongoDB (Subject Page)
 
 const subjectSchema = new mongoose.Schema({
-    subjectNames: String,
+    subjectNames: { type: String, required: true },
 });
 
 const Subject = new mongoose.model("Subject", subjectSchema);
@@ -101,7 +101,7 @@ const Subject = new mongoose.model("Subject", subjectSchema);
 const itemListSchema = new mongoose.Schema({
     parentSubjectName: String,
     parentSubjectId: String,
-    subjectTitleName: String,
+    subjectTitleName: { type: String, required: true },
     subjectBodyName: String,
     subjectFooterName: String,
 });
@@ -229,6 +229,10 @@ app.route("/home")
 
         subjectItem.save((err) => {
             if (err) {
+                if (err._message === "Subject validation failed") {
+                    res.redirect("/home");
+                }
+
                 console.log(err);
             } else {
                 res.redirect("/home");
@@ -319,6 +323,10 @@ app.post("/home/subjects/:id", (req, res) => {
 
             listItem.save((err) => {
                 if (err) {
+                    if (err._message === "Item validation failed") {
+                        res.redirect("/home");
+                    }
+
                     console.log(err);
                 } else {
                     res.redirect("/home/subjects/" + req.params.id);
