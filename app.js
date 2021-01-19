@@ -49,10 +49,8 @@ mongoose.connect(
 
 const accountSchema = new mongoose.Schema({
     email: String,
-    password: {
-        type: String,
-        unique: false,
-    },
+    password: String,
+    googleId: String,
 });
 
 accountSchema.plugin(passportLocalMongoose);
@@ -71,6 +69,24 @@ passport.deserializeUser((id, done) => {
         done(err, user);
     });
 });
+
+passport.use(
+    new GoogleStrategy(
+        {
+            clientID: process.env.CLIENT_ID,
+            clientSecret: process.env.CLIENT_SECRET,
+            callbackURL: "http://localhost:3000/auth/google/home",
+            userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
+        },
+        (accessToken, refreshToken, profile, cb) => {
+            console.log(profile);
+
+            Account.findOrCreate({ googleId: profile.id }, (err, user) => {
+                return cb(err, user);
+            });
+        }
+    )
+);
 
 // * MongoDB (Subject Page)
 
@@ -98,6 +114,21 @@ app.get("/", (req, res) => {
     res.render("index");
 });
 
+// * Google OAuth
+
+app.get(
+    "/auth/google/",
+    passport.authenticate("google", { scope: ["profile"] })
+);
+
+app.get(
+    "/auth/google/home",
+    passport.authenticate("google", { failureRedirect: "/login" }),
+    (req, res) => {
+        res.redirect("/home");
+    }
+);
+
 // * Register Route
 
 app.route("/register")
@@ -116,6 +147,9 @@ app.route("/register")
                     if (err) {
                         if (err.name === "UserExistsError") {
                             res.render("register", { err: "emailErr" });
+                        } else if (err.name === "MissingUsernameError") {
+                            console.log("MissingUsernameError");
+                            res.redirect("register");
                         } else {
                             console.log(err);
                             res.redirect("/register");
@@ -145,6 +179,10 @@ app.route("/login")
     .post((req, res, next) => {
         passport.authenticate("local", (err, user, info) => {
             if (err) {
+                if (err === "MissingUsernameError") {
+                    console.log("MissingUsernameError");
+                    res.redirect("/register");
+                }
                 return next(err);
             }
 

@@ -275,10 +275,7 @@ h1 {
                 text-decoration: none;
                 font-weight: 500;
                 width: 80%;
-
-                &:hover {
-                    border-bottom: 1px solid $blue;
-                }
+                text-decoration: underline 2px solid rgba(#5966ff, 0.9);
             }
         }
     }

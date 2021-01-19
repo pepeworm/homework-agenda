@@ -106,6 +106,53 @@ form {
   margin-top: 5rem;
 }
 
+form .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+form .container .oauth a {
+  margin-right: 2rem;
+  border: 1px solid #2e2e2e;
+  padding: 0.3rem 0.5rem;
+  text-decoration: none;
+  color: #2e2e2e;
+  -webkit-transition: background 100ms linear, color 100ms linear;
+  transition: background 100ms linear, color 100ms linear;
+}
+
+form .container .oauth a i {
+  color: #2e2e2e;
+  margin: 0 0.3rem 0 0;
+  -webkit-transition: color 100ms linear;
+  transition: color 100ms linear;
+}
+
+form .container .oauth a:hover {
+  background: #2e2e2e;
+  color: #fff;
+}
+
+form .container .oauth a:hover i {
+  color: #fff;
+}
+
+form .container .email-pwd {
+  padding-left: 2rem;
+  border-left: 1px solid rgba(46, 46, 46, 0.8);
+}
+
 form i {
   color: #2e2e2e;
   margin-bottom: 2rem;

@@ -38,14 +38,22 @@
     <form method="POST" action="/login">
         <i class="fas fa-key fa-4x"></i>
 
-        <input type="email" name="username" placeholder="Email" autocomplete="off" autofocus required>
+        <div class="container">
+            <div class="oauth">
+                <a href="/auth/google"><i class="fab fa-google"></i> Sign In with Google</a>
+            </div>
 
-        <input type="password" name="password" placeholder="Password" autocomplete="off" required>
-        <% if (err === "emailOrPasswordErr") { %>
-        <p class="err-msg emailOrPasswordErr">* Email or password is incorrect</p>
-        <% } %>
+            <div class="email-pwd">
+                <input type="email" name="username" placeholder="Email" autocomplete="off" autofocus required>
 
-        <button type="submit">Login</button>
+                <input type="password" name="password" placeholder="Password" autocomplete="off" required>
+                <% if (err === "emailOrPasswordErr") { %>
+                <p class="err-msg emailOrPasswordErr">* Email or password is incorrect</p>
+                <% } %>
+
+                <button type="submit">Login</button>
+            </div>
+        </div>
     </form>
 </body>
 

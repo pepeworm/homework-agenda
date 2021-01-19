@@ -101,6 +101,44 @@ form {
     max-width: 85%;
     margin-top: 5rem;
     
+    .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        .oauth {
+            a {
+                margin-right: 2rem;
+                border: 1px solid $darkGrey;
+                padding: 0.3rem 0.5rem;
+                text-decoration: none;
+                color: $darkGrey;
+                transition: background 100ms linear, color 100ms linear;
+
+                i {
+                    color: $darkGrey;
+                    margin: 0 0.3rem 0 0;
+                    transition: color 100ms linear;
+                }
+
+                &:hover {
+                    background: $darkGrey;
+                    color: #fff;
+                    
+                    i {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+
+        .email-pwd {
+            padding-left: 2rem;
+            border-left: 1px solid rgba($darkGrey, 0.8);
+        }
+    } 
+
     i {
         color: $darkGrey;
         margin-bottom: 2rem;

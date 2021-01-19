@@ -325,10 +325,8 @@ h1.home-header {
   text-decoration: none;
   font-weight: 500;
   width: 80%;
-}
-
-.subject-box form.subject-delete-form .subject-block a:hover {
-  border-bottom: 1px solid #0b5bd5;
+  -webkit-text-decoration: underline 2px solid rgba(89, 102, 255, 0.9);
+          text-decoration: underline 2px solid rgba(89, 102, 255, 0.9);
 }
 
 footer {

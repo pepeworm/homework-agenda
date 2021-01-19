@@ -38,14 +38,22 @@
     <form method="POST" action="/register">
         <i class="fab fa-keycdn fa-5x"></i>
 
-        <input type="email" name="username" placeholder="Email" autocomplete="off" autofocus required>
-        <% if (err === "emailErr") { %>
-        <p class="err-msg email">* Email is already in use</p>
-        <% } %>
+        <div class="container">
+            <div class="oauth">
+                <a href="/auth/google"><i class="fab fa-google"></i> Sign Up with Google</a>
+            </div>
 
-        <input type="password" name="password" placeholder="Password" autocomplete="off" required>
+            <div class="email-pwd">
+                <input type="email" name="username" placeholder="Email" autocomplete="off" autofocus required>
+                <% if (err === "emailErr") { %>
+                <p class="err-msg email">* Email is already in use</p>
+                <% } %>
 
-        <button type="submit">Register</button>
+                <input type="password" name="password" placeholder="Password" autocomplete="off" required>
+
+                <button type="submit">Register</button>
+            </div>
+        </div>
     </form>
 </body>
 
