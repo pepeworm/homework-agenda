@@ -374,6 +374,13 @@ app.get("/home/subjects/items/:listItemId", (req, res) => {
     });
 });
 
+// * Logout
+
+app.get("/logout", (req, res) => {
+    req.logout();
+    res.redirect("/");
+});
+
 // * Others
 
 app.listen(process.env.PORT || 3000, () => {

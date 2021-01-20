@@ -126,8 +126,42 @@ nav {
     }
 
     ul {
-        padding: 0;
+        padding: 0 0 0.5rem;
         display: none;
+
+        .account {
+            a, i {
+                text-decoration: none;
+                color: rgba(#fff, 0.8);
+                font-size: 0.9rem;
+            }
+
+            a {
+                border: 1px solid rgba(#fff, 0.8);
+                padding: 0.4rem 0.6rem;
+                text-decoration: none;
+                background: transparent;
+                transition: color 200ms linear, background 200ms linear;
+
+                i {
+                    margin-right: 0.1rem;
+                }
+
+                &:hover {
+                    background: rgba(#fff, 0.8);
+                    color: $darkGrey;
+
+                    i {
+                        color: $darkGrey;
+                    }
+                }
+            }
+        }
+
+        hr.menu-divide {
+            margin: 0.5rem 0 1.4rem;
+            border-style: solid;
+        }
 
         li {
             list-style: none;
