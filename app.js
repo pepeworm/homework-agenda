@@ -34,16 +34,12 @@ app.use(passport.session());
 
 // * Mongoose
 
-mongoose.connect(
-    "mongodb://localhost:27017/homeworkAgenda",
-    // process.env.MONGO,
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false,
-        useCreateIndex: true,
-    }
-);
+mongoose.connect(process.env.MONGO, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+});
 
 // * MongoDB (Accounts)
 
