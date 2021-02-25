@@ -16,17 +16,18 @@
         <% if (newSubjectItems.length > 0) { %>
         <% newSubjectItems.forEach((subjectItem) => { %>
         <li>
-            <% if (subjectItem.subjectNames.length >= 25) { %>
-            <a href="/home/subjects/<%= subjectItem._id %>"><%= subjectItem.subjectNames.slice(0, 26) + "..." %></a>
+            <% if (subjectItem.subject.subjectNames.length >= 25) { %>
+            <a
+                href="/home/subjects/<%= subjectItem._id %>"><%= subjectItem.subject.subjectNames.slice(0, 26) + "..." %></a>
             <% } else { %>
-            <a href="/home/subjects/<%= subjectItem._id %>"><%= subjectItem.subjectNames %></a>
+            <a href="/home/subjects/<%= subjectItem._id %>"><%= subjectItem.subject.subjectNames %></a>
             <% } %>
+            <% }); %>
         </li>
-        <% }); %>
         <% } else { %>
         <li class="no-work">Woo hoo! You have completed all your work!</li>
         <% } %>
-        
+
         <hr class="menu-divide">
 
         <div class="account">
@@ -48,11 +49,11 @@
         <div class="subject-block">
             <input type="checkbox" name="subjectDeleteCheckbox" onchange="this.form.submit()" value="<%= item._id %>">
 
-            <% if (item.subjectNames.length > 30) { %>
+            <% if (item.subject.subjectNames.length > 30) { %>
             <a href="<%= "subjects" + "/" + item._id %>"
-                class="subject-link"><%= item.subjectNames.slice(0, 31) + "..." %></a>
+                class="subject-link"><%= item.subject.subjectNames.slice(0, 31) + "..." %></a>
             <% } else { %>
-            <a href="<%= "subjects" + "/" + item._id %>" class="subject-link"><%= item.subjectNames %></a>
+            <a href="<%= "subjects" + "/" + item._id %>" class="subject-link"><%= item.subject.subjectNames %></a>
             <% } %>
         </div>
     </form>

@@ -87,7 +87,13 @@ passport.use(
 // * MongoDB (Subject Page)
 
 const subjectSchema = new mongoose.Schema({
-    subjectNames: { type: String, required: true },
+    subject: {
+        id: String,
+        subjectNames: {
+            type: String,
+            required: true,
+        },
+    },
 });
 
 const Subject = new mongoose.model("Subject", subjectSchema);
@@ -200,15 +206,30 @@ app.route("/login")
 app.route("/home")
     .get((req, res) => {
         if (req.isAuthenticated()) {
-            Subject.find({}, (err, foundSubjects) => {
+            Account.find({}, (err, accountId) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.render("home", {
-                        currentDate: dateTime.currentDate(),
-                        weekday: dateTime.weekday(),
-                        newSubjectItems: foundSubjects,
-                    });
+                    Subject.find(
+                        { "subject.id": req.user.id },
+                        (error, foundSubjects) => {
+                            if (error) {
+                                console.log(error);
+                            } else {
+                                let subjectArr = [];
+
+                                foundSubjects.forEach((subjects) => {
+                                    subjectArr.push(subjects);
+                                });
+
+                                res.render("home", {
+                                    currentDate: dateTime.currentDate(),
+                                    weekday: dateTime.weekday(),
+                                    newSubjectItems: subjectArr,
+                                });
+                            }
+                        }
+                    );
                 }
             });
         } else {
@@ -220,7 +241,10 @@ app.route("/home")
         const subject = req.body.newSubject;
 
         const subjectItem = new Subject({
-            subjectNames: subject,
+            subject: {
+                id: req.user.id,
+                subjectNames: subject,
+            },
         });
 
         subjectItem.save((err) => {
@@ -241,26 +265,23 @@ app.route("/home")
 app.post("/deleteSubject", (req, res) => {
     const subjectDeleteId = req.body.subjectDeleteCheckbox;
 
-    Subject.findOne({ _id: subjectDeleteId }, (err, foundSubject) => {
+    Subject.findOne({ "subject._id": subjectDeleteId }, (err, foundSubject) => {
         if (err) {
             console.log(err);
         } else {
-            ItemList.deleteMany(
-                { parentSubjectId: foundSubject._id },
-                (err) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        Subject.deleteOne({ _id: subjectDeleteId }, (err) => {
-                            if (err) {
-                                console.log(err);
-                            } else {
-                                res.redirect("/home");
-                            }
-                        });
-                    }
+            ItemList.deleteMany({ parentSubjectId: foundSubject }, (err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    Subject.deleteOne({ _id: subjectDeleteId }, (err) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            res.redirect("/home");
+                        }
+                    });
                 }
-            );
+            });
         }
     });
 });
