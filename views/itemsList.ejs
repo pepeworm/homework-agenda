@@ -42,10 +42,11 @@
             <% if (newSubjectItems.length > 0) { %>
             <% newSubjectItems.forEach((subjectItem) => {%>
             <li>
-                <% if (subjectItem.subjectNames.length >= 25) { %>
-                <a href="/home/subjects/<%= subjectItem._id %>"><%= subjectItem.subjectNames.slice(0, 26) + "..." %></a>
+                <% if (subjectItem.subject.subjectNames.length >= 25) { %>
+                <a
+                    href="/home/subjects/<%= subjectItem._id %>"><%= subjectItem.subject.subjectNames.slice(0, 26) + "..." %></a>
                 <% } else { %>
-                <a href="/home/subjects/<%= subjectItem._id %>"><%= subjectItem.subjectNames %></a>
+                <a href="/home/subjects/<%= subjectItem._id %>"><%= subjectItem.subject.subjectNames %></a>
                 <% } %>
             </li>
             <% }); %>
@@ -110,7 +111,7 @@
 </body>
 
 <footer>
-    <p>&copy; 2020 Pepeworm</p>
+    <p>&copy; 2021 Pepeworm</p>
     <a href="https://github.com/pepeworm/homework-agenda" target="_blank"><i class="fab fa-github"></i> View Code</a>
 </footer>
 

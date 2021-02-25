@@ -131,7 +131,7 @@ app.get(
     }
 );
 
-// * Register Route
+// * Register Route (Route has no issues)
 
 app.route("/register")
     .get((req, res) => {
@@ -171,7 +171,7 @@ app.route("/register")
         });
     });
 
-// * Login Route
+// * Login Route (Route has no issues)
 
 app.route("/login")
     .get((req, res) => {
@@ -201,7 +201,7 @@ app.route("/login")
         })(req, res, next);
     });
 
-// * Home Route
+// * Home Route (Route has no issues)
 
 app.route("/home")
     .get((req, res) => {
@@ -260,58 +260,26 @@ app.route("/home")
         });
     });
 
-// * /deleteSubject Route
+// * /deleteSubject Route (Route fixed)
 
 app.post("/deleteSubject", (req, res) => {
     const subjectDeleteId = req.body.subjectDeleteCheckbox;
 
-    Subject.findOne({ "subject._id": subjectDeleteId }, (err, foundSubject) => {
+    Subject.findOne({ _id: subjectDeleteId }, (err, foundSubject) => {
         if (err) {
             console.log(err);
         } else {
-            ItemList.deleteMany({ parentSubjectId: foundSubject }, (err) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    Subject.deleteOne({ _id: subjectDeleteId }, (err) => {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            res.redirect("/home");
-                        }
-                    });
-                }
-            });
-        }
-    });
-});
-
-// * Route Parameters (Subjects)
-
-app.route("/home/subjects/:id").get((req, res) => {
-    const subjectId = req.params.id;
-
-    Subject.findOne({ _id: subjectId }, (err, foundSubject) => {
-        if (err) {
-            console.log(err);
-        } else {
-            ItemList.find(
+            ItemList.deleteMany(
                 { parentSubjectId: foundSubject._id },
-                (err, foundItemList) => {
+                (err) => {
                     if (err) {
                         console.log(err);
                     } else {
-                        Subject.find({}, (err, foundSubjects) => {
+                        Subject.deleteOne({ _id: subjectDeleteId }, (err) => {
                             if (err) {
                                 console.log(err);
                             } else {
-                                res.render("itemsList", {
-                                    weekday: dateTime.weekday(),
-                                    subject: foundSubject.subjectNames,
-                                    subjectId: subjectId,
-                                    newListItems: foundItemList,
-                                    newSubjectItems: foundSubjects,
-                                });
+                                res.redirect("/home");
                             }
                         });
                     }
@@ -321,37 +289,80 @@ app.route("/home/subjects/:id").get((req, res) => {
     });
 });
 
-app.post("/home/subjects/:id", (req, res) => {
-    const newItemTitle = req.body.subjectItemTitle;
-    const newItemBody = req.body.subjectItemBody;
-    const newItemFooter = req.body.subjectItemFooter;
+// * Route Parameters (Subjects)
 
-    Subject.findOne({ _id: req.params.id }, (err, foundSubject) => {
-        if (err) {
-            console.log(err);
-        } else {
-            const listItem = new ItemList({
-                parentSubjectName: foundSubject.subjectNames,
-                parentSubjectId: foundSubject._id,
-                subjectTitleName: newItemTitle,
-                subjectBodyName: newItemBody,
-                subjectFooterName: newItemFooter,
-            });
+app.route("/home/subjects/:id")
+    .get((req, res) => {
+        const subjectId = req.params.id;
 
-            listItem.save((err) => {
-                if (err) {
-                    if (err._message === "Item validation failed") {
-                        res.redirect("/home");
+        Subject.findOne({ _id: subjectId }, (err, foundSubject) => {
+            if (err) {
+                console.log(err);
+            } else {
+                ItemList.find(
+                    { parentSubjectId: foundSubject._id },
+                    (err, foundItemList) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            Subject.find(
+                                { "subject.id": req.user.id },
+                                (err, foundSubjects) => {
+                                    if (err) {
+                                        console.log(err);
+                                    } else {
+                                        res.render("itemsList", {
+                                            weekday: dateTime.weekday(),
+                                            subject:
+                                                foundSubject.subject
+                                                    .subjectNames,
+                                            subjectId: subjectId,
+                                            newListItems: foundItemList,
+                                            newSubjectItems: foundSubjects,
+                                        });
+                                    }
+                                }
+                            );
+                        }
                     }
+                );
+            }
+        });
+    })
 
-                    console.log(err);
-                } else {
-                    res.redirect("/home/subjects/" + req.params.id);
-                }
-            });
-        }
+    .post((req, res) => {
+        const newItemTitle = req.body.subjectItemTitle;
+        const newItemBody = req.body.subjectItemBody;
+        const newItemFooter = req.body.subjectItemFooter;
+
+        Subject.findOne({ _id: req.params.id }, (err, foundSubject) => {
+            if (err) {
+                console.log(err);
+            } else {
+                const listItem = new ItemList({
+                    parentSubjectName: foundSubject.subjectNames,
+                    parentSubjectId: foundSubject._id,
+                    subjectTitleName: newItemTitle,
+                    subjectBodyName: newItemBody,
+                    subjectFooterName: newItemFooter,
+                });
+
+                listItem.save((err) => {
+                    if (err) {
+                        if (err._message === "Item validation failed") {
+                            res.redirect("/home");
+                        }
+
+                        console.log(err);
+                    } else {
+                        res.redirect("/home/subjects/" + req.params.id);
+                    }
+                });
+            }
+        });
     });
-});
+
+// * Delete Item Route (Route has no issues)
 
 app.post("/deleteItem", (req, res) => {
     const itemDeleteId = req.body.listItemDelete;
@@ -368,7 +379,7 @@ app.post("/deleteItem", (req, res) => {
     });
 });
 
-// * Subject Items Route
+// * Subject Items Route (Route fixed)
 
 app.get("/home/subjects/items/:listItemId", (req, res) => {
     const listItemId = req.params.listItemId;
@@ -377,21 +388,24 @@ app.get("/home/subjects/items/:listItemId", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            Subject.find({}, (err, foundSubjects) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.render("listItemFull", {
-                        foundItem: foundItem,
-                        newSubjectItems: foundSubjects,
-                    });
+            Subject.find(
+                { "subject.id": req.user.id },
+                (err, foundSubjects) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.render("listItemFull", {
+                            foundItem: foundItem,
+                            newSubjectItems: foundSubjects,
+                        });
+                    }
                 }
-            });
+            );
         }
     });
 });
 
-// * Logout
+// * Logout (Route has no issues)
 
 app.get("/logout", (req, res) => {
     req.logout();
