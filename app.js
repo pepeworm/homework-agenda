@@ -71,7 +71,7 @@ passport.use(
         {
             clientID: process.env.CLIENT_ID,
             clientSecret: process.env.CLIENT_SECRET,
-            callbackURL: "http://localhost:3000/auth/google/home",
+            callbackURL: "https://homework-agenda.herokuapp.com/auth/google/home",
             userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
         },
         (accessToken, refreshToken, profile, cb) => {
