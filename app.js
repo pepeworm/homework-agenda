@@ -13,6 +13,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const LocalStrategy = require("passport-local").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
 const session = require("express-session");
+const validator = require("email-validator");
 
 // * Express.js
 
@@ -71,7 +72,8 @@ passport.use(
         {
             clientID: process.env.CLIENT_ID,
             clientSecret: process.env.CLIENT_SECRET,
-            callbackURL: "https://homework-agenda.herokuapp.com/auth/google/home",
+            callbackURL:
+                "https://homework-agenda.herokuapp.com/auth/google/home",
             userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
         },
         (accessToken, refreshToken, profile, cb) => {
@@ -151,15 +153,21 @@ app.route("/register")
                             res.render("register", { err: "emailErr" });
                         } else if (err.name === "MissingUsernameError") {
                             console.log("MissingUsernameError");
-                            res.redirect("register");
+                            res.redirect("/register");
                         } else {
                             console.log(err);
                             res.redirect("/register");
                         }
                     } else {
-                        passport.authenticate("local")(req, res, () => {
-                            res.redirect("/home");
-                        });
+                        if (validator.validate(user.username) === false) {
+                            res.render("register", {
+                                err: "emailValidationErr",
+                            });
+                        } else {
+                            passport.authenticate("local")(req, res, () => {
+                                res.redirect("/home");
+                            });
+                        }
 
                         if (req.statusCode === 401) {
                             console.log("Error code: 401");

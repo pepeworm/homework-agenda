@@ -49,6 +49,10 @@
                 <p class="err-msg email">* Email is already in use</p>
                 <% } %>
 
+                <% if (err === "emailValidationErr") { %>
+                <p class="err-msg email">* Email does not exist</p>
+                <% } %>
+
                 <input type="password" name="password" placeholder="Password" autocomplete="off" required>
 
                 <button type="submit">Register</button>
