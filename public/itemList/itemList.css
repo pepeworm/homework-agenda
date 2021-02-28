@@ -355,7 +355,7 @@ form.subject-delete-form .subject-block input[type="checkbox"]:checked {
   outline: none;
 }
 
-form.subject-delete-form .subject-block input[type="checkbox"]:checked + a {
+form.subject-delete-form .subject-block input[type="checkbox"]:checked ~ p.subject-title-name-display, form.subject-delete-form .subject-block input[type="checkbox"]:checked ~ a.extra-info {
   text-decoration: line-through;
   -webkit-text-decoration-color: #0b5bd5;
           text-decoration-color: #0b5bd5;

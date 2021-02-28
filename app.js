@@ -46,7 +46,7 @@ mongoose.connect(process.env.MONGO, {
 
 const accountSchema = new mongoose.Schema({
     email: String,
-    password: String,
+    password: { type: String, required: true },
     googleId: String,
 });
 
@@ -147,34 +147,45 @@ app.route("/register")
             if (err) {
                 console.log(err);
             } else {
-                Account.register({ username: email }, password, (err, user) => {
-                    if (err) {
-                        if (err.name === "UserExistsError") {
-                            res.render("register", { err: "emailErr" });
-                        } else if (err.name === "MissingUsernameError") {
-                            console.log("MissingUsernameError");
-                            res.redirect("/register");
-                        } else {
-                            console.log(err);
-                            res.redirect("/register");
-                        }
-                    } else {
-                        if (validator.validate(user.username) === false) {
-                            res.render("register", {
-                                err: "emailValidationErr",
-                            });
-                        } else {
-                            passport.authenticate("local")(req, res, () => {
-                                res.redirect("/home");
-                            });
-                        }
+                if (validator.validate(email) === false) {
+                    res.render("register", {
+                        err: "emailValidationErr",
+                    });
+                } else {
+                    Account.register(
+                        { username: email },
+                        password,
+                        (err, user) => {
+                            if (err) {
+                                if (err.name === "UserExistsError") {
+                                    res.render("register", { err: "emailErr" });
+                                } else if (
+                                    err.name === "MissingUsernameError"
+                                ) {
+                                    console.log("MissingUsernameError");
+                                    res.redirect("/register");
+                                } else if (
+                                    err.name === "MissingPasswordError"
+                                ) {
+                                    console.log("MissingPasswordError");
+                                    res.redirect("/register");
+                                } else {
+                                    console.log(err);
+                                    res.redirect("/register");
+                                }
+                            } else {
+                                passport.authenticate("local")(req, res, () => {
+                                    res.redirect("/home");
+                                });
 
-                        if (req.statusCode === 401) {
-                            console.log("Error code: 401");
-                            res.redirect("/register");
+                                if (req.statusCode === 401) {
+                                    console.log("Error code: 401");
+                                    res.redirect("/register");
+                                }
+                            }
                         }
-                    }
-                });
+                    );
+                }
             }
         });
     });

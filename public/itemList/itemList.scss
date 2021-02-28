@@ -313,7 +313,7 @@ form.subject-delete-form {
             &:checked {
                 outline: none;
 
-                &+a {
+                & ~ p.subject-title-name-display, & ~ a.extra-info {
                     text-decoration: line-through;
                     text-decoration-color: $blue;
                 }
