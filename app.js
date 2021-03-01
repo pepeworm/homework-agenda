@@ -46,7 +46,7 @@ mongoose.connect(process.env.MONGO, {
 
 const accountSchema = new mongoose.Schema({
     email: String,
-    password: { type: String, required: true },
+    password: String,
     googleId: String,
 });
 
