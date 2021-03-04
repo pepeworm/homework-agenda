@@ -1,0 +1,178 @@
+// SCSS Mixin
+
+@mixin boxWidth {
+    display: flex;
+    flex-direction: column;
+}
+
+// SCSS Variables
+
+$darkGrey: #2e2e2e;
+$lightGrey: #e9e9e9;
+$blue: #0b5bd5;
+$lightBlue: rgb(87, 123, 233);
+
+::selection {
+    color: #fff;
+    background: $darkGrey;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Raleway", sans-serif;
+    color: $darkGrey;
+    text-align: center;
+}
+
+html {
+    padding: 0 0 6rem;
+    overflow-x: hidden;
+
+    background-color: $lightBlue;
+}
+
+body {
+    @include boxWidth();    
+}
+
+.btn-container {
+    .btn {
+        text-decoration: none;
+        padding: 0.4rem 0.6rem;
+
+        &.btn-login {
+            background: none;
+            transition: background 100ms linear, color 100ms linear;
+        }
+    }
+}
+
+nav {
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: #232323;
+    padding: 0.8rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+
+    img[alt=logo] {
+        width: 2rem;
+    }
+
+    .btn-container {
+        .btn {
+            border: 1px solid $lightBlue;
+
+            &:last-child {
+                margin-left: 0.5rem;
+            }
+
+            &.btn-register {
+                background: $lightBlue;
+            }
+
+            &.btn-login {
+                color: $lightBlue;
+                background: none;
+                transition: background 100ms linear, color 100ms linear;
+
+                &:hover {
+                    background: $lightBlue;
+                    color: $lightGrey;
+                }
+            }
+        }
+    }
+}
+
+.email-verification-box {
+    border: 1px solid $darkGrey;
+    background: white;
+    padding: 1.5rem 3rem;
+    text-align: center;
+    box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.4);
+    margin: auto;
+    display: inline-block;
+    width: 75%;
+    max-width: 85%;
+    margin-top: 5rem;
+
+    h1 {
+        margin-bottom: 2rem;
+    }
+
+    p {
+        max-width: 70%;
+        margin: auto;
+    }
+
+    form {
+        button[type=submit] {
+            cursor: pointer;
+            text-decoration: none;
+            padding: 0.4rem 0.6rem;
+            border: 1px solid $darkGrey;
+            background: none;
+            font-size: 1rem;
+            margin: 2rem 0 0.7rem;
+            transition: background 100ms linear, color 100ms linear;
+
+            &:hover {
+                background: $darkGrey;
+                color: white;
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        p {
+            color: rgba($darkGrey, 0.8);
+        }
+    }
+}
+
+footer {
+    margin-top: 2.8rem;
+
+    a {
+        color: #e9e9e9;
+    }
+
+    p {
+        color: #e9e9e9;
+        margin-bottom: 1.2rem;
+    }
+
+    a {
+        padding: 0.4rem 0.6rem;
+        border: 1px solid #e9e9e9;
+        font-size: 0.9rem;
+        text-decoration: none;
+        background: transparent;
+        transition: color 200ms linear, background 200ms linear;
+
+        &:hover {
+            background: #e9e9e9;
+            color: $lightBlue;
+
+            i {
+                color: $lightBlue;
+            }
+        }
+
+        i {
+            color: #e9e9e9;
+            font-size: 0.9rem;
+            margin-right: 0.1rem;
+        }
+    }
+}

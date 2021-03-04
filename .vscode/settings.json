@@ -2,7 +2,9 @@
     "cSpell.words": [
         "center",
         "flexbox",
-        "flexbox center"
+        "flexbox center",
+        "jwt",
+        "secret"
     ],
     "discord.enabled": true
 }

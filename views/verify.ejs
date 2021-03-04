@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda</title>
+
+    <!-- Favicon -->
+
+    <link rel="icon" href="../../../../../../images/favicon.ico">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="../../../../../../verify/verify.css">
+
+    <!-- Font Family -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+        integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav>
+        <a href="/" class="nav-home-link"><img src="../../../../../../images/favicon.ico" alt="logo"></a>
+
+        <div class="btn-container">
+            <a href="/register" class="btn btn-register">Register</a>
+            <a href="/login" class="btn btn-login">Login</a>
+        </div>
+    </nav>
+
+    <div class="email-verification-box">
+        <h1>Email Verification</h1>
+        <p class="description">Please click the <strong>Send Verification Link</strong> button below and check the inbox of the Email
+            account you used to register for this website and
+            click the verification link, which will redirect you to the home page.</p>
+        <form action="/verify" method="POST">
+            <button type="submit" class="resend-auth-link-btn">Send Verification Link</button>
+            <% if (information === "newLinkSent") { %>
+            <p>Verification link has been sent.</p>
+            <% } %>
+
+            <% if (information === "codeExist") { %>
+            <p>A verification link has already been sent to you in the last 10 minutes.</p>
+            <% } %>
+        </form>
+    </div>
+</body>
+
+</html>

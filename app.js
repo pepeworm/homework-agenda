@@ -4,7 +4,6 @@
 
 require("dotenv").config();
 const express = require("express");
-const _ = require("lodash");
 const dateTime = require("./dateTime");
 const mongoose = require("mongoose");
 const passport = require("passport");
@@ -14,6 +13,8 @@ const LocalStrategy = require("passport-local").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
 const session = require("express-session");
 const validator = require("email-validator");
+const cryptoRandomString = require("crypto-random-string");
+const nodemailer = require("nodemailer");
 
 // * Express.js
 
@@ -48,6 +49,7 @@ const accountSchema = new mongoose.Schema({
     email: String,
     password: String,
     googleId: String,
+    active: Boolean,
 });
 
 accountSchema.plugin(passportLocalMongoose);
@@ -112,6 +114,20 @@ const itemListSchema = new mongoose.Schema({
 
 const ItemList = new mongoose.model("Item", itemListSchema);
 
+// * MongoDB (Verification Page)
+
+const verifySchema = new mongoose.Schema({
+    code: String,
+    userId: String,
+    dateCreated: {
+        type: Date,
+        default: Date.now(),
+        expires: 600,
+    },
+});
+
+const VerificationCode = new mongoose.model("VerificationCodes", verifySchema);
+
 // * Root Route
 
 app.get("/", (req, res) => {
@@ -133,6 +149,103 @@ app.get(
     }
 );
 
+// * Verification Route (In development)
+
+app.route("/verify")
+    .get((req, res) => {
+        Account.findOne({ _id: req.user.id }, (error, foundAccount) => {
+            if (error) {
+                console.log(error);
+            } else {
+                if (foundAccount.active === true) {
+                    res.redirect("/home");
+                } else {
+                    if (req.isAuthenticated()) {
+                        res.render("verify", { information: "" });
+                    } else {
+                        res.redirect("/login");
+                    }
+                }
+            }
+        });
+    })
+    .post((req, res) => {
+        const code = cryptoRandomString({
+            length: 128,
+            type: "url-safe",
+        });
+
+        VerificationCode.find({ userId: req.user.id }, (err, foundId) => {
+            if (err) {
+                console.log(err);
+            } else {
+                if (foundId.length > 0) {
+                    return res.render("verify", { information: "codeExist" });
+                } else {
+                    const verificationCode = new VerificationCode({
+                        code: code,
+                        userId: req.user.id,
+                    });
+
+                    verificationCode.save((err) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            VerificationCode.findOne(
+                                { userId: req.user.id },
+                                (err, foundCode) => {
+                                    if (err) {
+                                        console.log(err);
+                                    } else {
+                                        const baseUrl =
+                                            "https://homework-agenda.herokuapp.com";
+
+                                        const transporter = nodemailer.createTransport(
+                                            {
+                                                service: "gmail",
+                                                auth: {
+                                                    user: process.env.EMAIL,
+                                                    pass: process.env.EMAIL_PWD,
+                                                },
+                                            }
+                                        );
+
+                                        const message = {
+                                            from: `Homework Agenda <${process.env.EMAIL}>`,
+                                            to: req.user.username,
+                                            subject:
+                                                "Homework Agenda Verification Code",
+                                            html: `<h1 style="color: #161616;">Please follow the link below to verify your account</h1><a href="${baseUrl}/verifyLink/auth/${foundCode.code}" style="display: block; text-decoration: none; font-size: 1rem;">${baseUrl}/verifyLink/auth/${foundCode.code}</a><p style="font-size: 0.8rem;">This link expires in <strong>10 minutes</strong></p>`,
+                                        };
+
+                                        transporter.sendMail(
+                                            message,
+                                            (err, info) => {
+                                                if (err) {
+                                                    console.log(err);
+                                                } else {
+                                                    return res.render(
+                                                        "verify",
+                                                        {
+                                                            information:
+                                                                "newLinkSent",
+                                                        }
+                                                    );
+                                                }
+                                            }
+                                        );
+                                    }
+                                }
+                            );
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+// ! add route to handle verification link, perhaps something along the lines of "/verify/auth/:authLink" and decode the :authLink with Bcrypt and then check against database
+
 // * Register Route (Route has no issues)
 
 app.route("/register")
@@ -153,12 +266,14 @@ app.route("/register")
                     });
                 } else {
                     Account.register(
-                        { username: email },
+                        { username: email, active: false },
                         password,
                         (err, user) => {
                             if (err) {
                                 if (err.name === "UserExistsError") {
-                                    res.render("register", { err: "emailErr" });
+                                    res.render("register", {
+                                        err: "emailErr",
+                                    });
                                 } else if (
                                     err.name === "MissingUsernameError"
                                 ) {
@@ -225,30 +340,42 @@ app.route("/login")
 app.route("/home")
     .get((req, res) => {
         if (req.isAuthenticated()) {
-            Account.find({}, (err, accountId) => {
-                if (err) {
-                    console.log(err);
+            Account.findOne({ _id: req.user.id }, (error, foundAccount) => {
+                if (error) {
+                    console.log(error);
                 } else {
-                    Subject.find(
-                        { "subject.id": req.user.id },
-                        (error, foundSubjects) => {
-                            if (error) {
-                                console.log(error);
+                    if (foundAccount.active === false) {
+                        res.redirect("/verify");
+                    } else {
+                        Account.find({}, (err, accountId) => {
+                            if (err) {
+                                console.log(err);
                             } else {
-                                let subjectArr = [];
+                                Subject.find(
+                                    { "subject.id": req.user.id },
+                                    (error, foundSubjects) => {
+                                        if (error) {
+                                            console.log(error);
+                                        } else {
+                                            let subjectArr = [];
 
-                                foundSubjects.forEach((subjects) => {
-                                    subjectArr.push(subjects);
-                                });
+                                            foundSubjects.forEach(
+                                                (subjects) => {
+                                                    subjectArr.push(subjects);
+                                                }
+                                            );
 
-                                res.render("home", {
-                                    currentDate: dateTime.currentDate(),
-                                    weekday: dateTime.weekday(),
-                                    newSubjectItems: subjectArr,
-                                });
+                                            res.render("home", {
+                                                currentDate: dateTime.currentDate(),
+                                                weekday: dateTime.weekday(),
+                                                newSubjectItems: subjectArr,
+                                            });
+                                        }
+                                    }
+                                );
                             }
-                        }
-                    );
+                        });
+                    }
                 }
             });
         } else {
@@ -312,41 +439,45 @@ app.post("/deleteSubject", (req, res) => {
 
 app.route("/home/subjects/:id")
     .get((req, res) => {
-        const subjectId = req.params.id;
+        if (req.isAuthenticated()) {
+            const subjectId = req.params.id;
 
-        Subject.findOne({ _id: subjectId }, (err, foundSubject) => {
-            if (err) {
-                console.log(err);
-            } else {
-                ItemList.find(
-                    { parentSubjectId: foundSubject._id },
-                    (err, foundItemList) => {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            Subject.find(
-                                { "subject.id": req.user.id },
-                                (err, foundSubjects) => {
-                                    if (err) {
-                                        console.log(err);
-                                    } else {
-                                        res.render("itemsList", {
-                                            weekday: dateTime.weekday(),
-                                            subject:
-                                                foundSubject.subject
-                                                    .subjectNames,
-                                            subjectId: subjectId,
-                                            newListItems: foundItemList,
-                                            newSubjectItems: foundSubjects,
-                                        });
+            Subject.findOne({ _id: subjectId }, (err, foundSubject) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    ItemList.find(
+                        { parentSubjectId: foundSubject._id },
+                        (err, foundItemList) => {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                Subject.find(
+                                    { "subject.id": req.user.id },
+                                    (err, foundSubjects) => {
+                                        if (err) {
+                                            console.log(err);
+                                        } else {
+                                            res.render("itemsList", {
+                                                weekday: dateTime.weekday(),
+                                                subject:
+                                                    foundSubject.subject
+                                                        .subjectNames,
+                                                subjectId: subjectId,
+                                                newListItems: foundItemList,
+                                                newSubjectItems: foundSubjects,
+                                            });
+                                        }
                                     }
-                                }
-                            );
+                                );
+                            }
                         }
-                    }
-                );
-            }
-        });
+                    );
+                }
+            });
+        } else {
+            res.redirect("/login");
+        }
     })
 
     .post((req, res) => {
@@ -401,27 +532,31 @@ app.post("/deleteItem", (req, res) => {
 // * Subject Items Route (Route fixed)
 
 app.get("/home/subjects/items/:listItemId", (req, res) => {
-    const listItemId = req.params.listItemId;
+    if (req.isAuthenticated()) {
+        const listItemId = req.params.listItemId;
 
-    ItemList.findOne({ _id: listItemId }, (err, foundItem) => {
-        if (err) {
-            console.log(err);
-        } else {
-            Subject.find(
-                { "subject.id": req.user.id },
-                (err, foundSubjects) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        res.render("listItemFull", {
-                            foundItem: foundItem,
-                            newSubjectItems: foundSubjects,
-                        });
+        ItemList.findOne({ _id: listItemId }, (err, foundItem) => {
+            if (err) {
+                console.log(err);
+            } else {
+                Subject.find(
+                    { "subject.id": req.user.id },
+                    (err, foundSubjects) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            res.render("listItemFull", {
+                                foundItem: foundItem,
+                                newSubjectItems: foundSubjects,
+                            });
+                        }
                     }
-                }
-            );
-        }
-    });
+                );
+            }
+        });
+    } else {
+        res.redirect("/login");
+    }
 });
 
 // * Logout (Route has no issues)
