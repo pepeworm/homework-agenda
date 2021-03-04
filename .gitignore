@@ -1,5 +1,2 @@
 node_modules/*
 .vscode/*
-.env
-package.json
-package-lock.json
