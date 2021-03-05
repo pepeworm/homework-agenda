@@ -149,7 +149,7 @@ app.get(
     }
 );
 
-// * Verification Route (In development)
+// * Verification Route (Route has no issues)
 
 app.route("/verify")
     .get((req, res) => {
@@ -240,6 +240,8 @@ app.route("/verify")
             }
         });
     });
+
+// * Verify Link Route (Route has no issues)
 
 app.get("/verifyLink/auth/:authLink", (req, res) => {
     const authLink = req.params.authLink;
