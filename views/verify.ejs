@@ -38,13 +38,15 @@
 
     <div class="email-verification-box">
         <h1>Email Verification</h1>
-        <p class="description">Please click the <strong>Send Verification Link</strong> button below and check the inbox of the Email
-            account you used to register for this website and
-            click the verification link, which will redirect you to the home page.</p>
+        <p class="description top">A Verification Link has been sent to your Email.</p>
+        <p class="description bottom">Please check your spam mail or press the <strong>Resend Verification Link</strong>
+            button
+            below if you don't
+            see the link.</p>
         <form action="/verify" method="POST">
-            <button type="submit" class="resend-auth-link-btn">Send Verification Link</button>
+            <button type="submit" class="resend-auth-link-btn">Resend Verification Link</button>
             <% if (information === "newLinkSent") { %>
-            <p>Verification link has been sent.</p>
+            <p>New Verification Link has been sent.</p>
             <% } %>
 
             <% if (information === "codeExist") { %>

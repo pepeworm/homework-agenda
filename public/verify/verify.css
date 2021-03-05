@@ -65,7 +65,7 @@ nav {
   width: 100%;
 }
 
-nav img[alt=logo] {
+nav img[alt="logo"] {
   width: 2rem;
 }
 
@@ -116,7 +116,7 @@ nav .btn-container .btn.btn-login:hover {
   margin: auto;
 }
 
-.email-verification-box form button[type=submit] {
+.email-verification-box form button[type="submit"] {
   cursor: pointer;
   text-decoration: none;
   padding: 0.4rem 0.6rem;
@@ -128,17 +128,26 @@ nav .btn-container .btn.btn-login:hover {
   transition: background 100ms linear, color 100ms linear;
 }
 
-.email-verification-box form button[type=submit]:hover {
+.email-verification-box form button[type="submit"]:hover {
   background: #2e2e2e;
   color: white;
 }
 
-.email-verification-box form button[type=submit]:focus {
+.email-verification-box form button[type="submit"]:focus {
   outline: none;
 }
 
 .email-verification-box form p {
   color: rgba(46, 46, 46, 0.8);
+}
+
+.email-verification-box .top {
+  margin-bottom: 0.5rem;
+  max-width: 70%;
+}
+
+.email-verification-box .bottom {
+  max-width: 70%;
 }
 
 footer {

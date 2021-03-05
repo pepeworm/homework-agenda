@@ -34,7 +34,7 @@ html {
 }
 
 body {
-    @include boxWidth();    
+    @include boxWidth();
 }
 
 .btn-container {
@@ -62,7 +62,7 @@ nav {
     margin: 0 auto;
     width: 100%;
 
-    img[alt=logo] {
+    img[alt="logo"] {
         width: 2rem;
     }
 
@@ -114,7 +114,7 @@ nav {
     }
 
     form {
-        button[type=submit] {
+        button[type="submit"] {
             cursor: pointer;
             text-decoration: none;
             padding: 0.4rem 0.6rem;
@@ -137,6 +137,15 @@ nav {
         p {
             color: rgba($darkGrey, 0.8);
         }
+    }
+
+    .top {
+        margin-bottom: 0.5rem;
+        max-width: 70%;
+    }
+    
+    .bottom {
+        max-width: 70%;
     }
 }
 

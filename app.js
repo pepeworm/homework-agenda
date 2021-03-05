@@ -199,7 +199,6 @@ app.route("/verify")
                                     } else {
                                         const baseUrl =
                                             "https://homework-agenda.herokuapp.com";
-
                                         const transporter = nodemailer.createTransport(
                                             {
                                                 service: "gmail",
@@ -209,7 +208,6 @@ app.route("/verify")
                                                 },
                                             }
                                         );
-
                                         const message = {
                                             from: `Homework Agenda <${process.env.EMAIL}>`,
                                             to: req.user.username,
@@ -217,7 +215,6 @@ app.route("/verify")
                                                 "Homework Agenda Verification Code",
                                             html: `<h1 style="color: #161616;">Please follow the link below to verify your account</h1><a href="${baseUrl}/verifyLink/auth/${foundCode.code}" style="display: block; text-decoration: none; font-size: 1rem;">${baseUrl}/verifyLink/auth/${foundCode.code}</a><p style="font-size: 0.8rem;">This link expires in <strong>10 minutes</strong></p>`,
                                         };
-
                                         transporter.sendMail(
                                             message,
                                             (err, info) => {
@@ -244,7 +241,46 @@ app.route("/verify")
         });
     });
 
-// ! add route to handle verification link, perhaps something along the lines of "/verify/auth/:authLink" and decode the :authLink with Bcrypt and then check against database
+app.get("/verifyLink/auth/:authLink", (req, res) => {
+    const authLink = req.params.authLink;
+
+    VerificationCode.findOne({ code: authLink }, (err, foundCode) => {
+        if (err) {
+            console.log(err);
+        } else {
+            if (!foundCode) {
+                res.send("Verification Link is expired");
+            } else {
+                Account.updateOne(
+                    { _id: foundCode.userId },
+                    { active: "true" },
+                    (err, updateResult) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log(updateResult);
+
+                            VerificationCode.findByIdAndDelete(
+                                { _id: foundCode._id },
+                                (err, result) => {
+                                    if (err) {
+                                        console.log(err);
+                                    } else {
+                                        console.log(
+                                            "Deleted Verification Code"
+                                        );
+
+                                        res.redirect("/home");
+                                    }
+                                }
+                            );
+                        }
+                    }
+                );
+            }
+        }
+    });
+});
 
 // * Register Route (Route has no issues)
 
@@ -290,7 +326,83 @@ app.route("/register")
                                 }
                             } else {
                                 passport.authenticate("local")(req, res, () => {
-                                    res.redirect("/home");
+                                    const code = cryptoRandomString({
+                                        length: 128,
+                                        type: "url-safe",
+                                    });
+
+                                    const verificationCode = new VerificationCode(
+                                        {
+                                            code: code,
+                                            userId: req.user.id,
+                                        }
+                                    );
+
+                                    verificationCode.save((err) => {
+                                        if (err) {
+                                            console.log(err);
+                                        } else {
+                                            VerificationCode.findOne(
+                                                {
+                                                    userId: req.user.id,
+                                                },
+                                                (err, foundCode) => {
+                                                    if (err) {
+                                                        console.log(err);
+                                                    } else {
+                                                        const baseUrl =
+                                                            "https://homework-agenda.herokuapp.com";
+
+                                                        const transporter = nodemailer.createTransport(
+                                                            {
+                                                                service:
+                                                                    "gmail",
+                                                                auth: {
+                                                                    user:
+                                                                        process
+                                                                            .env
+                                                                            .EMAIL,
+                                                                    pass:
+                                                                        process
+                                                                            .env
+                                                                            .EMAIL_PWD,
+                                                                },
+                                                            }
+                                                        );
+
+                                                        const message = {
+                                                            from: `Homework Agenda <${process.env.EMAIL}>`,
+                                                            to:
+                                                                req.user
+                                                                    .username,
+                                                            subject:
+                                                                "Homework Agenda Verification Code",
+                                                            html: `<h1 style="color: #161616;">Please follow the link below to verify your account</h1><a href="${baseUrl}/verifyLink/auth/${foundCode.code}" style="display: block; text-decoration: none; font-size: 1rem;">${baseUrl}/verifyLink/auth/${foundCode.code}</a><p style="font-size: 0.8rem;">This link expires in <strong>10 minutes</strong></p>`,
+                                                        };
+
+                                                        transporter.sendMail(
+                                                            message,
+                                                            (err, info) => {
+                                                                if (err) {
+                                                                    console.log(
+                                                                        err
+                                                                    );
+                                                                } else {
+                                                                    console.log(
+                                                                        info
+                                                                    );
+
+                                                                    res.redirect(
+                                                                        "/home"
+                                                                    );
+                                                                }
+                                                            }
+                                                        );
+                                                    }
+                                                }
+                                            );
+                                        }
+                                    });
                                 });
 
                                 if (req.statusCode === 401) {
@@ -330,7 +442,82 @@ app.route("/login")
                 if (loginErr) {
                     return next(loginErr);
                 }
-                return res.redirect("/home");
+
+                Account.findOne({ _id: req.user.id }, (err, foundAccount) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        if (foundAccount.active === true) {
+                            res.redirect("/home");
+                        } else {
+                            const code = cryptoRandomString({
+                                length: 128,
+                                type: "url-safe",
+                            });
+
+                            const verificationCode = new VerificationCode({
+                                code: code,
+                                userId: req.user.id,
+                            });
+
+                            verificationCode.save((err) => {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    VerificationCode.findOne(
+                                        {
+                                            userId: req.user.id,
+                                        },
+                                        (err, foundCode) => {
+                                            if (err) {
+                                                console.log(err);
+                                            } else {
+                                                const baseUrl =
+                                                    "https://homework-agenda.herokuapp.com";
+
+                                                const transporter = nodemailer.createTransport(
+                                                    {
+                                                        service: "gmail",
+                                                        auth: {
+                                                            user:
+                                                                process.env
+                                                                    .EMAIL,
+                                                            pass:
+                                                                process.env
+                                                                    .EMAIL_PWD,
+                                                        },
+                                                    }
+                                                );
+
+                                                const message = {
+                                                    from: `Homework Agenda <${process.env.EMAIL}>`,
+                                                    to: req.user.username,
+                                                    subject:
+                                                        "Homework Agenda Verification Code",
+                                                    html: `<h1 style="color: #161616;">Please follow the link below to verify your account</h1><a href="${baseUrl}/verifyLink/auth/${foundCode.code}" style="display: block; text-decoration: none; font-size: 1rem;">${baseUrl}/verifyLink/auth/${foundCode.code}</a><p style="font-size: 0.8rem;">This link expires in <strong>10 minutes</strong></p>`,
+                                                };
+
+                                                transporter.sendMail(
+                                                    message,
+                                                    (err, info) => {
+                                                        if (err) {
+                                                            console.log(err);
+                                                        } else {
+                                                            console.log(info);
+                                                            res.redirect(
+                                                                "/home"
+                                                            );
+                                                        }
+                                                    }
+                                                );
+                                            }
+                                        }
+                                    );
+                                }
+                            });
+                        }
+                    }
+                });
             });
         })(req, res, next);
     });
